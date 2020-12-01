@@ -5,15 +5,6 @@
 { config, pkgs, ... }:
 
 let
-  # Nvidia Offload script
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec -a "$0" "$@"
-  '';
-
   # System python
   my-python-packages = python-packages: with python-packages; [
     pandas requests numpy matplotlib binwalk ROPGadget virtualenv tox ldap ansible
@@ -22,30 +13,24 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      <nixos-hardware-erdnaxe/dell/g3/3779>
+
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
+  # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "ventus"; # Define your hostname.
+  # Use networkmanager to manage network
+  networking.hostName = "ventus";
   networking.networkmanager.enable = true;
+  networking.useDHCP = false;
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp59s0.useDHCP = false;
-  networking.interfaces.wlo1.useDHCP = false;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -72,17 +57,6 @@ in
 
   # Configure keymap in X11
   services.xserver.layout = "fr";
-
-  # Nvidia driver
-  services.xserver.videoDrivers = [ "nvidia" ];
-  #services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
-  #hardware.nvidia.powerManagement.enable = true;  # may break things
-  hardware.nvidia.prime = {
-    #offload.enable = true;
-    sync.enable = true;
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -197,13 +171,4 @@ in
     extraModules = [ pkgs.pulseaudio-modules-bt ];
     package = pkgs.pulseaudioFull;
   };
-
-  # SSD
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 1;
-  };
-  services.fstrim.enable = true;
-
-  # Laptop
-  services.tlp.enable = true;
 }
