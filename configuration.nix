@@ -14,7 +14,7 @@ in
 {
   imports =
     [
-      <nixos-hardware-erdnaxe/dell/g3/3779>
+      <nixos-hardware/dell/g3/3779>
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -115,8 +115,8 @@ in
     # NTFS support
     ntfs3g
 
-    # Run on GPU
-    nvidia-offload cudaPackages.cudatoolkit_10_1
+    # Cuda support
+    cudaPackages.cudatoolkit_10_1
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
