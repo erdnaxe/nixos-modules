@@ -8,6 +8,7 @@ let
   # System python
   my-python-packages = python-packages: with python-packages; [
     pandas requests numpy matplotlib binwalk ROPGadget virtualenv tox ldap ansible
+    autopep8 yapf
   ];
   python-with-my-packages = pkgs.python38.withPackages my-python-packages;
 in
@@ -54,6 +55,10 @@ in
   services.gnome3.rygel.enable = false;
   services.avahi.enable = false;
   services.geoclue2.enable = false;
+  environment.gnome3.excludePackages = with pkgs; [
+    gnome-photos gnome3.totem gnome3.gnome-music gnome3.gnome-maps
+    gnome3.gnome-logs gnome3.gnome-terminal
+  ];
 
   # Configure keymap in X11
   services.xserver.layout = "fr";
@@ -85,17 +90,17 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Basic tools
-    wget vim
-    pciutils file
+    wget vim utillinux
+    pciutils file mosh dmidecode
     vulkan-tools mesa-demos clinfo
     screen tmux git htop nvtop tree wget rsync gcc boost gdb lua mono nodejs
     podman-compose pandoc zip unzip openssl gnumake nettools
-    python-with-my-packages
-    binutils-unwrapped espeak
+    python-with-my-packages scrot i3lock
+    binutils-unwrapped espeak toilet appimage-run ffmpeg-full
 
     # Applications
     firefox thunderbird element-desktop steam-run wineWowPackages.staging
-    wineWowPackages.fonts winetricks discord
+    wineWowPackages.fonts winetricks discord xournalpp
     audacity obs-studio obs-v4l2sink meld gitg chromium skypeforlinux
     alacritty vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore nextcloud-client pavucontrol
@@ -111,6 +116,7 @@ in
     gnomeExtensions.appindicator
     gnomeExtensions.dash-to-dock
     gnomeExtensions.system-monitor
+    gnome3.gnome-tweaks
 
     # NTFS support
     ntfs3g
