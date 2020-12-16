@@ -17,6 +17,8 @@ in
     [
       <nixos-hardware/dell/g3/3779>
 
+      ./vim.nix
+
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
@@ -90,7 +92,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Basic tools
-    wget vim utillinux
+    wget utillinux
     pciutils file mosh dmidecode
     vulkan-tools mesa-demos clinfo
     screen tmux git htop nvtop tree wget rsync gcc boost gdb lua mono nodejs
@@ -99,8 +101,8 @@ in
     binutils-unwrapped espeak toilet appimage-run ffmpeg-full
 
     # Applications
-    firefox thunderbird element-desktop steam-run wineWowPackages.staging
-    wineWowPackages.fonts winetricks discord xournalpp
+    firefox thunderbird element-desktop steam-run wine
+    winetricks discord xournalpp
     audacity obs-studio obs-v4l2sink meld gitg chromium skypeforlinux
     alacritty vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore nextcloud-client pavucontrol
