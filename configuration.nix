@@ -16,6 +16,7 @@ in
   imports =
     [
       <nixos-hardware/dell/g3/3779>
+      <home-manager/nixos>
 
       ./vim.nix
 
@@ -85,6 +86,14 @@ in
     extraGroups = [ "wheel" "vboxusers" "adbusers" "wireshark" "networkmanager" ];
   };
 
+  # By default, Home Manager uses a private pkgs instance that is configured
+  # via the home-manager.users.<name>.nixpkgs options.
+  # To instead use the global pkgs that is configured via the system
+  home-manager.useGlobalPkgs = true;
+
+  # Import home configuration
+  home-manager.users.erdnaxe = import ./home.nix;
+
   # Allow non-free software such as VSCode
   nixpkgs.config.allowUnfree = true;
 
@@ -95,7 +104,7 @@ in
     wget utillinux
     pciutils file mosh dmidecode
     vulkan-tools mesa-demos clinfo
-    screen tmux git htop nvtop tree wget rsync gcc boost gdb lua mono nodejs
+    screen tmux nvtop tree wget rsync gcc boost gdb lua mono nodejs
     podman-compose pandoc zip unzip openssl gnumake nettools
     python-with-my-packages scrot i3lock
     binutils-unwrapped espeak toilet appimage-run ffmpeg-full
@@ -104,7 +113,7 @@ in
     firefox thunderbird element-desktop steam-run wine
     winetricks discord xournalpp
     audacity obs-studio obs-v4l2sink meld gitg chromium skypeforlinux
-    alacritty vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
+    vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore nextcloud-client pavucontrol
 
     # CTF
