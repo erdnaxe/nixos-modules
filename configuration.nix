@@ -18,8 +18,6 @@ in
       <nixos-hardware/dell/g3/3779>
       <home-manager/nixos>
 
-      ./vim.nix
-
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
@@ -62,6 +60,7 @@ in
     gnome-photos gnome3.totem gnome3.gnome-music gnome3.gnome-maps
     gnome3.gnome-logs gnome3.gnome-terminal
   ];
+  environment.variables = { EDITOR = "vim"; };
 
   # Configure keymap in X11
   services.xserver.layout = "fr";
