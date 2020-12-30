@@ -41,6 +41,16 @@ in
     keyMap = "fr";
   };
 
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    roboto
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+  ];
+
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
