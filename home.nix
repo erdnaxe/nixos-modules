@@ -19,16 +19,12 @@
     };
   };
 
-#  programs.firefox = {
-#    enable = true;
-#    profiles = {
-#      myprofile = {
-#        settings = {
-#          "general.smoothScroll" = true;
-#        };
-#      };
-#    };
-#  };
+  programs.chromium = {
+    enable = true;
+    extensions = [
+      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+    ];
+  };
 
   programs.git = {
     enable = true;
@@ -40,6 +36,7 @@
   programs.htop = {
     enable = true;
     hideThreads = true;
+    hideUserlandThreads = true;
     showProgramPath = false;
     treeView = true;
   };
