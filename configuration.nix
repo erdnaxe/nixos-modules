@@ -49,40 +49,39 @@ in
     liberation_ttf
     fira-code
     fira-code-symbols
+    font-awesome
   ];
 
-  # Enable the GNOME 3 Desktop Environment.
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
-
-  # Disable some Gnome defaults
-  services.dleyna-renderer.enable = false;
-  services.dleyna-server.enable = false;
-  services.gnome3.tracker-miners.enable = false;
-  services.gnome3.tracker.enable = false;
-  services.gnome3.gnome-remote-desktop.enable = false;
-  services.gnome3.gnome-user-share.enable = false;
-  services.gnome3.rygel.enable = false;
-  services.avahi.enable = false;
-  services.geoclue2.enable = false;
-  environment.gnome3.excludePackages = with pkgs; [
-    gnome-photos gnome3.totem gnome3.gnome-music gnome3.gnome-maps
-    gnome3.gnome-logs gnome3.gnome-terminal
-  ];
-  environment.variables = { EDITOR = "vim"; };
-
-  # Configure keymap in X11
-  services.xserver.layout = "fr";
+  # Graphical session
+  services.xserver = {
+    enable = true;
+    layout = "fr";  # fr azerty keyboard
+    libinput.enable = true;  # touchpad support
+    displayManager.lightdm.enable = true;
+    windowManager.i3 = {
+      enable = true;
+      extraPackages = with pkgs; [
+        dmenu
+        i3status-rust
+        lightlocker
+      ];
+    };
+  };
+  services.udisks2.enable = true;
+  security.polkit.enable = true;
+  services.accounts-daemon.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.system-config-printer.enable = true;
+
+  environment.variables = { EDITOR = "vim"; };
 
   # Enable sound.
   sound.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  # XDG portal for Flatpak
+  xdg.portal.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # wheel for sudo
@@ -133,9 +132,7 @@ in
     android-udev-rules abootimg
 
     # Gnome 3
-    gnomeExtensions.appindicator
     gnomeExtensions.dash-to-dock
-    gnomeExtensions.system-monitor
     gnome3.gnome-tweaks
 
     # NTFS support

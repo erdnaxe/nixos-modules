@@ -1,0 +1,52 @@
+theme = "solarized-dark"
+icons = "awesome5"
+
+[[block]]
+block = "disk_space"
+path = "/"
+alias = "/"
+info_type = "available"
+unit = "GB"
+interval = 20
+warning = 20.0
+alert = 10.0
+
+[[block]]
+block = "memory"
+display_type = "memory"
+format_mem = "{Mup}%"
+format_swap = "{SUp}%"
+
+[[block]]
+block = "cpu"
+interval = 1
+format = "{barchart} {utilization}% {frequency}GHz"
+
+[[block]]
+block = "keyboard_layout"
+driver = "localebus"
+
+[[block]]
+block = "networkmanager"
+on_click = "alacritty -e nmtui"
+device_format = "{icon} {ap}"
+
+[[block]]
+block = "music"
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "backlight"
+
+[[block]]
+block = "battery"
+interval = 10
+format = "{percentage}% {time}"
+
+[[block]]
+block = "time"
+interval = 20
+format = "%Y/%m/%d %R"
+
