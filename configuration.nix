@@ -61,7 +61,7 @@ in
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
-        dmenu
+        j4-dmenu-desktop
         i3status-rust
         lightlocker
       ];
@@ -150,6 +150,7 @@ in
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
+    pinentryFlavor = "gnome3";
   };
 
   # List services that you want to enable:
