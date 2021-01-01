@@ -70,6 +70,7 @@ in
   services.udisks2.enable = true;
   security.polkit.enable = true;
   services.accounts-daemon.enable = true;
+  services.upower.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -79,6 +80,7 @@ in
 
   # Enable sound.
   sound.enable = true;
+  sound.mediaKeys.enable = true;
 
   # XDG portal for Flatpak
   xdg.portal.enable = true;

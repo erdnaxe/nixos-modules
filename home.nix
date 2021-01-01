@@ -59,6 +59,12 @@
   # Notification deamon
   services.dunst.enable = true;
 
+  # Fix screen tearing
+  services.picom = {
+    enable = true;
+    vSync = true;
+  };
+
   xsession.windowManager.i3 = {
     enable = true;
     config = {
