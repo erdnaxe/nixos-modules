@@ -125,7 +125,7 @@ in
     audacity obs-studio obs-v4l2sink meld gitg skypeforlinux
     vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore nextcloud-client
-    cura xscreensaver handbrake
+    cura handbrake
 
     # Dev
     hugo

@@ -27,11 +27,6 @@ block = "keyboard_layout"
 driver = "localebus"
 
 [[block]]
-block = "networkmanager"
-on_click = "alacritty -e nmtui"
-device_format = "{icon} {ap}"
-
-[[block]]
 block = "music"
 
 [[block]]
