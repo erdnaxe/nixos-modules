@@ -59,6 +59,9 @@
   # Notification deamon
   services.dunst.enable = true;
 
+  # Pulseaudio in tray
+  services.pasystray.enable = true;
+
   # Fix screen tearing
   services.picom = {
     enable = true;
@@ -80,6 +83,7 @@
         {
           fonts = ["Noto Sans Mono" "FontAwesome 10"];
           statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${./i3status-rust.toml}";
+          trayOutput = "primary";
           colors = {
             separator = "#666666";
             background = "#222222";
