@@ -58,6 +58,12 @@ in
     layout = "fr";  # fr azerty keyboard
     libinput.enable = true;  # touchpad support
     displayManager.lightdm.enable = true;
+    desktopManager.xfce = {
+        enable = true;
+        noDesktop = true;
+        enableXfwm = false;
+      };
+    };
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
@@ -67,10 +73,6 @@ in
       ];
     };
   };
-  services.udisks2.enable = true;
-  security.polkit.enable = true;
-  services.accounts-daemon.enable = true;
-  services.upower.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -80,7 +82,6 @@ in
 
   # Enable sound.
   sound.enable = true;
-  sound.mediaKeys.enable = true;
 
   # XDG portal for Flatpak
   xdg.portal.enable = true;
@@ -124,7 +125,7 @@ in
     winetricks discord xournalpp
     audacity obs-studio obs-v4l2sink meld gitg skypeforlinux
     vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
-    inkscape multimc krita blender musescore nextcloud-client pavucontrol
+    inkscape multimc krita blender musescore nextcloud-client
 
     # CTF
     socat netcat-gnu killall testdisk goaccess volatility sqlmap apktool

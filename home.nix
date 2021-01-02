@@ -70,6 +70,7 @@
     config = {
       modifier = "Mod4";
       terminal = "alacritty";
+      menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop";
       window.hideEdgeBorders = "smart";
       floating.criteria = [
         { title = "Steam - Update News"; }
