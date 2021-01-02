@@ -52,29 +52,28 @@ in
     font-awesome
   ];
 
-  # Graphical session
+  # Services
+  services.flatpak.enable = true;
+  services.blueman.enable = true;
+  # services.openssh.enable = true;
   services.xserver = {
     enable = true;
     layout = "fr";  # fr azerty keyboard
     libinput.enable = true;  # touchpad support
     displayManager.lightdm.enable = true;
     desktopManager.xfce = {
-        enable = true;
-        noDesktop = true;
-        enableXfwm = false;
-      };
+      enable = true;
+      noDesktop = true;
+      enableXfwm = false;
     };
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
         j4-dmenu-desktop
         i3status-rust
-        lightlocker
       ];
     };
   };
-
-  # Enable CUPS to print documents.
   services.printing.enable = true;
   services.system-config-printer.enable = true;
 
@@ -113,19 +112,23 @@ in
   environment.systemPackages = with pkgs; [
     # Basic tools
     wget utillinux
-    pciutils file mosh dmidecode
+    pciutils file mosh dmidecode inetutils jq
     vulkan-tools mesa-demos clinfo
     screen tmux nvtop tree wget rsync gcc boost gdb lua mono nodejs
     podman-compose pandoc zip unzip openssl gnumake nettools
-    python-with-my-packages scrot i3lock
+    python-with-my-packages scrot i3lock ffmpeg-full
     binutils-unwrapped espeak toilet appimage-run ffmpeg-full
 
     # Applications
     firefox thunderbird element-desktop steam-run wine
-    winetricks discord xournalpp
+    winetricks discord xournalpp apache-directory-studio
     audacity obs-studio obs-v4l2sink meld gitg skypeforlinux
     vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore nextcloud-client
+    cura xscreensaver handbrake
+
+    # Dev
+    hugo
 
     # CTF
     socat netcat-gnu killall testdisk goaccess volatility sqlmap apktool
@@ -156,13 +159,8 @@ in
     pinentryFlavor = "gnome3";
   };
 
-  # List services that you want to enable:
-  services.flatpak.enable = true;
   virtualisation.podman.enable = true;
   virtualisation.virtualbox.host.enable = true;
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -198,4 +196,5 @@ in
     extraModules = [ pkgs.pulseaudio-modules-bt ];
     package = pkgs.pulseaudioFull;
   };
+  hardware.bluetooth.enable = true;
 }
