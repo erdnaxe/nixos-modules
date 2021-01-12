@@ -9,13 +9,12 @@
         lines = 30;
         columns = 140;
       };
-      window.gtk_theme_variant = "dark";
       bell = {
         duration = 1;
         color = "#ffffff";
       };
-      background_opacity = 0.9;
       mouse.url.modifiers = "Control";
+      font.size = 9;
     };
   };
 

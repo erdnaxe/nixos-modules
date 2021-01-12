@@ -125,14 +125,14 @@ in
     audacity obs-studio obs-v4l2sink meld gitg skypeforlinux
     vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore nextcloud-client
-    cura handbrake
+    cura handbrake evince
 
     # Dev
     hugo
 
     # CTF
     socat netcat-gnu killall testdisk goaccess volatility sqlmap apktool
-    bettercap
+    bettercap pngcheck john jd-gui radare2
 
     # Android
     android-udev-rules abootimg
@@ -195,6 +195,10 @@ in
     support32Bit = true;
     extraModules = [ pkgs.pulseaudio-modules-bt ];
     package = pkgs.pulseaudioFull;
+    daemon.config = {
+      resample-method = "src-sinc-best-quality";
+      default-sample-rate = 96000;
+    };
   };
   hardware.bluetooth.enable = true;
 }
