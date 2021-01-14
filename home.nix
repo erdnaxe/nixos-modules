@@ -61,15 +61,6 @@
   # Pulseaudio in tray
   services.pasystray.enable = true;
 
-  # Screensaver
-  services.xscreensaver = {
-    enable = true;
-    settings = {
-      lock = true;
-      mode = "blank";
-    };
-  };
-
   # Fix screen tearing
   services.picom = {
     enable = true;
