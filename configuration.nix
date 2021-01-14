@@ -74,7 +74,12 @@ in
       ];
     };
   };
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      gutenprint gutenprintBin
+    ];
+  };
   services.system-config-printer.enable = true;
 
   environment.variables = { EDITOR = "vim"; };
