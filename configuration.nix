@@ -8,7 +8,7 @@ let
   # System python
   my-python-packages = python-packages: with python-packages; [
     pandas requests numpy matplotlib binwalk ROPGadget virtualenv tox ldap ansible
-    autopep8 yapf
+    autopep8 yapf youtube-dl
   ];
   python-with-my-packages = pkgs.python38.withPackages my-python-packages;
 in
@@ -50,6 +50,8 @@ in
     fira-code
     fira-code-symbols
     font-awesome
+    lmodern
+    gyre-fonts
   ];
 
   # Services
@@ -118,26 +120,28 @@ in
     # Basic tools
     wget utillinux
     pciutils file mosh dmidecode inetutils jq
-    vulkan-tools mesa-demos clinfo
+    vulkan-tools mesa-demos clinfo pass
     screen tmux nvtop tree wget rsync gcc boost gdb lua mono nodejs
     podman-compose pandoc zip unzip openssl gnumake nettools
     python-with-my-packages scrot i3lock ffmpeg-full
     binutils-unwrapped espeak toilet appimage-run ffmpeg-full
+    cmatrix lm_sensors shellcheck
 
     # Applications
     firefox thunderbird element-desktop steam-run wine
     winetricks discord xournalpp apache-directory-studio
     audacity obs-studio obs-v4l2sink meld gitg skypeforlinux
     vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
-    inkscape multimc krita blender musescore nextcloud-client
-    cura handbrake evince xlockmore
+    inkscape multimc krita blender musescore owncloud-client
+    cura handbrake evince xlockmore puredata qemu gnome3.file-roller
+    gource arandr gnome3.cheese dolphinEmu
 
     # Dev
-    hugo
+    hugo texlive.combined.scheme-medium
 
     # CTF
     socat netcat-gnu killall testdisk goaccess volatility sqlmap apktool
-    bettercap pngcheck john jd-gui radare2
+    bettercap pngcheck john jd-gui radare2 nmap-graphical
 
     # Android
     android-udev-rules abootimg
