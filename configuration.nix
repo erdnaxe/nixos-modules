@@ -83,6 +83,9 @@ in
     ];
   };
   services.system-config-printer.enable = true;
+  services.redshift.enable = true;
+  location.latitude = 48.85;
+  location.longitude = 2.35;
 
   environment.variables = { EDITOR = "vim"; };
 
@@ -134,7 +137,11 @@ in
     vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore owncloud-client
     cura handbrake evince xlockmore puredata qemu gnome3.file-roller
-    gource arandr gnome3.cheese dolphinEmu
+    gource arandr gnome3.cheese dolphinEmu gnome3.gedit texmaker
+    transmission
+
+    # Dicts
+    aspellDicts.en aspellDicts.fr aspellDicts.en-computers aspellDicts.en-science
 
     # Dev
     hugo texlive.combined.scheme-medium
