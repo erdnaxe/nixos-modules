@@ -27,9 +27,6 @@ block = "keyboard_layout"
 driver = "localebus"
 
 [[block]]
-block = "music"
-
-[[block]]
 block = "sound"
 
 [[block]]

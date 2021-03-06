@@ -62,6 +62,7 @@
     };
     theme = "solarized_alternate";
     pass.enable = true;
+    terminal = "${pkgs.alacritty}/bin/alacritty";
     # See rofi -dump-xresources
     extraConfig = ''
       rofi.modi: window,run,drun,emoji,ssh,emoji,combi
