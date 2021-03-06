@@ -70,6 +70,27 @@
     '';
   };
 
+  # Need next version of NixOS
+  # programs.i3status-rust = {
+  #   enable = true;
+  #   bars = {
+  #     default = {
+  #       theme = "solarized-dark";
+  #       icons = "awesome5";
+  #       blocks = [
+  #         { block = "disk_space"; info_type = "available"; interval = 20; path = "/"; alias = "/"; unit = "GB"; warning = "20.0"; alert = "10.0"; }
+  #         { block = "memory"; display_type = "memory"; format_mem = "{Mup}%"; format_swap = "{SUp}%"; }
+  #         { block = "cpu"; interval = 1; format = "{barchart} {utilization}% {frequency}GHz"; }
+  #         { block = "keyboard_layout"; driver = "localebus"; }
+  #         { block = "sound"; }
+  #         { block = "backlight"; }
+  #         { block = "battery"; format = "{percentage}% {time}"; driver = "upower"; device = "DisplayDevice"; }
+  #         { block = "time"; format = "%Y/%m/%d %R"; interval = 20; }
+  #       ];
+  #     };
+  #   };
+  # };
+
   # Notification deamon
   services.dunst = {
     enable = true;
