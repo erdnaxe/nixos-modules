@@ -71,10 +71,20 @@
   };
 
   # Notification deamon
-  services.dunst.enable = true;
-
-  # Pulseaudio in tray
-  services.pasystray.enable = true;
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        geometry = "300x5-30+50";
+        transparency = 10;
+        font = "Noto Sans Mono 11";
+        padding = 8;
+        horizontal_padding = 8;
+        idle_threshold = 120;
+        icon_position = "left";
+      };
+    };
+  };
 
   # Fix screen tearing
   services.picom = {
