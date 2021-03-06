@@ -30,6 +30,9 @@ in
   networking.hostName = "ventus";
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
+  networking.hosts = {
+    "127.0.0.1" = [ "rss-bridge.localhost" ];
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
@@ -70,10 +73,7 @@ in
     };
     windowManager.i3 = {
       enable = true;
-      extraPackages = with pkgs; [
-        j4-dmenu-desktop
-        i3status-rust
-      ];
+      extraPackages = with pkgs; [ i3status-rust ];
     };
   };
   services.printing = {

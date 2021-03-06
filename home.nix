@@ -55,6 +55,21 @@
     ];
   };
 
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi.override {
+      plugins = with pkgs; [ rofi-emoji ];
+    };
+    theme = "solarized_alternate";
+    pass.enable = true;
+    # See rofi -dump-xresources
+    extraConfig = ''
+      rofi.modi: window,run,drun,emoji,ssh,emoji,combi
+      rofi.combi-modi: window,drun,emoji,ssh,emoji
+      rofi.show-icons: true
+    '';
+  };
+
   # Notification deamon
   services.dunst.enable = true;
 
@@ -72,7 +87,7 @@
     config = {
       modifier = "Mod4";
       terminal = "alacritty";
-      menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop";
+      menu = "rofi -show combi";
       window.hideEdgeBorders = "smart";
       floating.criteria = [
         { title = "Steam - Update News"; }
