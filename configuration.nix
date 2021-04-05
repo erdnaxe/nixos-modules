@@ -8,7 +8,8 @@ let
   # System python
   my-python-packages = python-packages: with python-packages; [
     pandas requests numpy matplotlib binwalk ROPGadget virtualenv tox ldap ansible
-    autopep8 yapf youtube-dl
+    autopep8 yapf youtube-dl scapy ipykernel jupyterlab jupyterlab_server
+    python-language-server websockets
   ];
   python-with-my-packages = pkgs.python38.withPackages my-python-packages;
 in
@@ -133,7 +134,7 @@ in
     # Applications
     firefox thunderbird element-desktop steam-run wine
     winetricks discord xournalpp apache-directory-studio
-    audacity obs-studio obs-v4l2sink meld gitg skypeforlinux
+    audacity obs-studio meld gitg skypeforlinux
     vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore owncloud-client
     cura handbrake evince xlockmore puredata qemu gnome3.file-roller
@@ -144,7 +145,8 @@ in
     aspellDicts.en aspellDicts.fr aspellDicts.en-computers aspellDicts.en-science
 
     # Dev
-    hugo texlive.combined.scheme-medium
+    hugo
+    (texlive.combine { inherit (texlive) scheme-medium moderncv fontawesome; })
 
     # CTF
     socat netcat-gnu killall testdisk goaccess volatility sqlmap apktool
@@ -179,7 +181,8 @@ in
   virtualisation.virtualbox.host.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  # 4444: OBS remote
+  networking.firewall.allowedTCPPorts = [ 4444 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

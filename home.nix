@@ -1,5 +1,9 @@
 { pkgs, ... }:
 
+let
+  obs-websocket = import ./custom_pkg/obs-websocket.nix;
+  obs-streamfx = import ./custom_pkg/obs-streamfx.nix;
+in
 {
   programs.alacritty = {
     enable = true;
@@ -153,5 +157,13 @@
         }
       ];
     };
+  };
+
+  # OBS plugins
+  home.file = {
+    ".config/obs-studio/plugins/v4l2sink".source = "${pkgs.obs-v4l2sink}/share/obs/obs-plugins/v4l2sink";
+    ".config/obs-studio/plugins/obs-websocket".source = "${obs-websocket}/share/obs/obs-plugins/obs-websocket";
+    ".config/obs-studio/plugins/StreamFX".source = "${obs-streamfx}/plugins/StreamFX";
+    #".config/obs-studio/plugins/spectralizer".source = ./external/spectralizer;
   };
 }
