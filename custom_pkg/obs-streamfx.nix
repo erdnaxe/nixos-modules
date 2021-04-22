@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with lib; {
-    description = "StreamFX is a plugin for OBS Studio which adds many new effects, filters, sources, transitions and encoders";
+    description = "Plugin for OBS Studio which adds many new effects, filters, sources, transitions and encoders";
     homepage = "https://github.com/Xaymar/obs-StreamFX";
     maintainers = with maintainers; [ ];  # TODO
     license = licenses.gpl2Plus;

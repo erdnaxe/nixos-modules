@@ -48,10 +48,20 @@ in
     enable = true;
     viAlias = true;
     vimAlias = true;
-    #vimDiffAlias = true;
     extraConfig = ''
       set nocompatible
       set backspace=indent,eol,start
+      filetype indent plugin on
+      syntax on
+      set wildmenu
+      set showcmd
+      set hlsearch
+      set ignorecase
+      set smartcase
+      set autoindent
+      set nostartofline
+      set mouse=a
+      set number
     '';
     plugins = with pkgs.vimPlugins; [
       vim-lastplace
@@ -65,7 +75,6 @@ in
       plugins = with pkgs; [ rofi-emoji ];
     };
     theme = "solarized_alternate";
-    pass.enable = true;
     terminal = "${pkgs.alacritty}/bin/alacritty";
     # See rofi -dump-xresources
     extraConfig = ''
@@ -108,6 +117,7 @@ in
         horizontal_padding = 8;
         idle_threshold = 120;
         icon_position = "left";
+        max_icon_size = 16;
       };
     };
   };

@@ -87,6 +87,7 @@ in
   services.redshift.enable = true;
   location.latitude = 48.85;
   location.longitude = 2.35;
+  services.fwupd.enable = true;
 
   environment.variables = { EDITOR = "vim"; };
 
@@ -127,9 +128,9 @@ in
     vulkan-tools mesa-demos clinfo pass
     screen tmux nvtop tree wget rsync gcc boost gdb lua mono nodejs
     podman-compose pandoc zip unzip openssl gnumake nettools
-    python-with-my-packages scrot i3lock ffmpeg-full
+    python-with-my-packages scrot i3lock
     binutils-unwrapped espeak toilet appimage-run ffmpeg-full
-    cmatrix lm_sensors shellcheck
+    cmatrix lm_sensors shellcheck graphviz ripgrep
 
     # Applications
     firefox thunderbird element-desktop steam-run wine
@@ -139,25 +140,21 @@ in
     inkscape multimc krita blender musescore owncloud-client
     cura handbrake evince xlockmore puredata qemu gnome3.file-roller
     gource arandr gnome3.cheese dolphinEmu gnome3.gedit texmaker
-    transmission
+    transmission baobab gparted
 
     # Dicts
     aspellDicts.en aspellDicts.fr aspellDicts.en-computers aspellDicts.en-science
 
     # Dev
-    hugo
+    hugo black cargo go
     (texlive.combine { inherit (texlive) scheme-medium moderncv fontawesome; })
 
     # CTF
     socat netcat-gnu killall testdisk goaccess volatility sqlmap apktool
-    bettercap pngcheck john jd-gui radare2 nmap-graphical
+    bettercap pngcheck john jd-gui radare2 nmap-graphical ghidra-bin
 
     # Android
     android-udev-rules abootimg
-
-    # Gnome 3
-    gnomeExtensions.dash-to-dock
-    gnome3.gnome-tweaks
 
     # NTFS support
     ntfs3g
@@ -182,8 +179,9 @@ in
 
   # Open ports in the firewall.
   # 4444: OBS remote
+  # 5004: RTP pulseaudio incoming
   networking.firewall.allowedTCPPorts = [ 4444 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedUDPPorts = [ 5004 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
