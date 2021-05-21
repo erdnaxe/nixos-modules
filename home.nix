@@ -94,8 +94,7 @@ in
   #       blocks = [
   #         { block = "disk_space"; info_type = "available"; interval = 20; path = "/"; alias = "/"; unit = "GB"; warning = "20.0"; alert = "10.0"; }
   #         { block = "memory"; display_type = "memory"; format_mem = "{Mup}%"; format_swap = "{SUp}%"; }
-  #         { block = "cpu"; interval = 1; format = "{barchart} {utilization}% {frequency}GHz"; }
-  #         { block = "keyboard_layout"; driver = "localebus"; }
+  #         { block = "cpu"; interval = 1; format = "{barchart} {frequency}GHz"; }
   #         { block = "sound"; }
   #         { block = "backlight"; }
   #         { block = "battery"; format = "{percentage}% {time}"; driver = "upower"; device = "DisplayDevice"; }
@@ -128,6 +127,20 @@ in
     vSync = true;
   };
 
+  # Music player deamon on 127.0.0.1:6600
+  services.mpd = {
+    enable = true;
+    musicDirectory = "/home/erdnaxe/Music";
+    extraConfig = ''
+      default_permissions "read"
+
+      audio_output {
+          type "pulse"
+          name "PulseAudio"
+      }
+    '';
+  };
+
   xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -142,6 +155,7 @@ in
       bars = [
         {
           fonts = ["Noto Sans Mono" "FontAwesome 10"];
+          position = "top";
           statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${./i3status-rust.toml}";
           trayOutput = "primary";
           colors = {

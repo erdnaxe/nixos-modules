@@ -20,11 +20,7 @@ format_swap = "{SUp}%"
 [[block]]
 block = "cpu"
 interval = 1
-format = "{barchart} {utilization}% {frequency}GHz"
-
-[[block]]
-block = "keyboard_layout"
-driver = "localebus"
+format = "{barchart} {frequency}GHz"
 
 [[block]]
 block = "sound"
