@@ -9,7 +9,7 @@ let
   my-python-packages = python-packages: with python-packages; [
     pandas requests numpy matplotlib binwalk ROPGadget virtualenv tox ldap ansible
     autopep8 yapf youtube-dl scapy ipykernel jupyterlab jupyterlab_server
-    python-language-server websockets
+    python-language-server websockets isort
   ];
   python-with-my-packages = pkgs.python38.withPackages my-python-packages;
 in
@@ -26,6 +26,10 @@ in
   # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.binfmt.emulatedSystems = [ "armv6l-linux" "aarch64-linux" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    v4l2loopback
+  ];
 
   # Use networkmanager to manage network
   networking.hostName = "ventus";
@@ -123,44 +127,42 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Basic tools
-    wget utillinux
-    pciutils file mosh dmidecode inetutils jq
-    vulkan-tools mesa-demos clinfo pass
-    screen tmux nvtop tree wget rsync gcc boost gdb lua mono nodejs
-    podman-compose pandoc zip unzip openssl gnumake nettools
-    python-with-my-packages scrot i3lock
-    binutils-unwrapped espeak toilet appimage-run ffmpeg-full
-    cmatrix lm_sensors shellcheck graphviz ripgrep
+    wget utillinux pciutils file mosh dmidecode inetutils jq vulkan-tools
+    clinfo pass playerctl screen tmux nvtop tree wget rsync nettools
+    python-with-my-packages scrot binutils-unwrapped appimage-run
+    lm_sensors ripgrep mpc ntfs3g patchelf nix-prefetch-git
 
-    # Applications
+    # Archiver
+    zip unzip p7zip
+
+    # Audiovisual
+    ffmpeg-full espeak opus-tools
+
+    # Graphical applications
     firefox thunderbird element-desktop steam-run wine
     winetricks discord xournalpp apache-directory-studio
-    audacity obs-studio meld gitg skypeforlinux
+    audacity obs-studio meld skypeforlinux picard
     vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
     inkscape multimc krita blender musescore owncloud-client
     cura handbrake evince xlockmore puredata qemu gnome3.file-roller
-    gource arandr gnome3.cheese dolphinEmu gnome3.gedit texmaker
-    transmission baobab gparted
+    gource arandr dolphinEmu gnome3.gedit texmaker cutecom
+    transmission baobab gparted mesa-demos i3lock pulseeffects rubberband
 
     # Dicts
     aspellDicts.en aspellDicts.fr aspellDicts.en-computers aspellDicts.en-science
 
-    # Dev
-    hugo black cargo go
+    # Development and writing
+    hugo black cargo go_1_16 yarn gcc gdb lua mono nodejs gnumake shellcheck
+    upx clang-tools vagrant pandoc graphviz poppler_utils
     (texlive.combine { inherit (texlive) scheme-medium moderncv fontawesome; })
 
     # CTF
     socat netcat-gnu killall testdisk goaccess volatility sqlmap apktool
     bettercap pngcheck john jd-gui radare2 nmap-graphical ghidra-bin
+    inspectrum wireshark-qt gnuradio wabt
 
     # Android
     android-udev-rules abootimg
-
-    # NTFS support
-    ntfs3g
-
-    # Cuda support
-    cudaPackages.cudatoolkit_10_1
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
