@@ -22,7 +22,7 @@ in
       ./hardware-configuration.nix
 
       # Machine-specific configuration
-      ./configuration-local.nix
+      ./local-configuration.nix
     ];
 
   # Use the systemd-boot EFI boot loader, add ARM emulation and kernel modules
