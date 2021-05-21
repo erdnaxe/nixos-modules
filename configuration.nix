@@ -125,9 +125,10 @@ in
     clinfo pass playerctl screen tmux nvtop tree wget rsync nettools
     python-with-my-packages scrot binutils-unwrapped appimage-run
     lm_sensors ripgrep mpc_cli ntfs3g patchelf nix-prefetch-git
+    usbutils
 
     # Archiver
-    zip unzip p7zip
+    zip unzip p7zip unrar
 
     # Audiovisual
     ffmpeg-full espeak opusTools
@@ -141,6 +142,7 @@ in
     cura handbrake evince xlockmore puredata qemu gnome3.file-roller
     gource arandr dolphinEmu gnome3.gedit texmaker cutecom
     transmission baobab gparted mesa-demos i3lock pulseeffects rubberband
+    openscad printrun gnome3.gnome-disk-utility
 
     # Dicts
     aspellDicts.en aspellDicts.fr aspellDicts.en-computers aspellDicts.en-science
