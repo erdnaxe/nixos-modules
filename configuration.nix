@@ -16,27 +16,26 @@ in
 {
   imports =
     [
-      <nixos-hardware/dell/g3/3779>
       <home-manager/nixos>
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # Machine-specific configuration
+      ./configuration-local.nix
     ];
 
-  # Use the systemd-boot EFI boot loader
+  # Use the systemd-boot EFI boot loader, add ARM emulation and kernel modules
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.binfmt.emulatedSystems = [ "armv6l-linux" "aarch64-linux" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    v4l2loopback
-  ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   # Use networkmanager to manage network
-  networking.hostName = "ventus";
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
   networking.hosts = {
-    "127.0.0.1" = [ "rss-bridge.localhost" ];
+    # "127.0.0.1" = [ "rss-bridge.localhost" ];
   };
 
   # Set your time zone.
@@ -49,23 +48,16 @@ in
     keyMap = "fr";
   };
 
+  # Fonts
   fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    roboto
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    font-awesome
-    lmodern
-    gyre-fonts
+    noto-fonts noto-fonts-cjk noto-fonts-emoji
+    roboto liberation_ttf fira-code fira-code-symbols
+    font-awesome lmodern gyre-fonts
   ];
 
   # Services
   services.flatpak.enable = true;
   services.blueman.enable = true;
-  # services.openssh.enable = true;
   services.xserver = {
     enable = true;
     layout = "fr";  # fr azerty keyboard
@@ -76,22 +68,19 @@ in
       noDesktop = true;
       enableXfwm = false;
     };
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [ i3status-rust ];
-    };
+    windowManager.i3.enable = true;
   };
   services.printing = {
     enable = true;
-    drivers = with pkgs; [
-      gutenprint gutenprintBin
-    ];
+    drivers = with pkgs; [ gutenprint gutenprintBin ];
   };
   services.system-config-printer.enable = true;
   services.redshift.enable = true;
+  #services.pipewire.enable = true;
+
+  # Approximative geographic location for redshift
   location.latitude = 48.85;
   location.longitude = 2.35;
-  services.fwupd.enable = true;
 
   environment.variables = { EDITOR = "vim"; };
 
@@ -103,13 +92,18 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # wheel for sudo
-  # video for brightnessctl
-  users.users.erdnaxe = {
-    isNormalUser = true;
-    home = "/home/erdnaxe";
-    description = "Alexandre";
-    shell = pkgs.zsh;
-    extraGroups = [ "wheel" "vboxusers" "adbusers" "wireshark" "networkmanager" ];
+  users = {
+    mutableUsers = false;
+    users.root.hashedPassword = "*";
+    users.erdnaxe = {
+      uid = 1000;
+      passwordFile = "/etc/nixos/erdnaxe_password.secret";
+      isNormalUser = true;
+      home = "/home/erdnaxe";
+      description = "Alexandre";
+      shell = pkgs.zsh;
+      extraGroups = [ "wheel" "vboxusers" "adbusers" "wireshark" "networkmanager" ];
+    };
   };
 
   # By default, Home Manager uses a private pkgs instance that is configured
@@ -130,13 +124,13 @@ in
     wget utillinux pciutils file mosh dmidecode inetutils jq vulkan-tools
     clinfo pass playerctl screen tmux nvtop tree wget rsync nettools
     python-with-my-packages scrot binutils-unwrapped appimage-run
-    lm_sensors ripgrep mpc ntfs3g patchelf nix-prefetch-git
+    lm_sensors ripgrep mpc_cli ntfs3g patchelf nix-prefetch-git
 
     # Archiver
     zip unzip p7zip
 
     # Audiovisual
-    ffmpeg-full espeak opus-tools
+    ffmpeg-full espeak opusTools
 
     # Graphical applications
     firefox thunderbird element-desktop steam-run wine
@@ -180,10 +174,8 @@ in
   virtualisation.virtualbox.host.enable = true;
 
   # Open ports in the firewall.
-  # 4444: OBS remote
-  # 5004: RTP pulseaudio incoming
-  networking.firewall.allowedTCPPorts = [ 4444 ];
-  networking.firewall.allowedUDPPorts = [ 5004 ];
+  # networking.firewall.allowedTCPPorts = [ 4444 ];
+  # networking.firewall.allowedUDPPorts = [ 5004 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
