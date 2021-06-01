@@ -9,9 +9,10 @@ let
   my-python-packages = python-packages: with python-packages; [
     pandas requests numpy matplotlib binwalk ROPGadget virtualenv tox ldap ansible
     autopep8 yapf youtube-dl scapy ipykernel jupyterlab jupyterlab_server
-    python-language-server websockets isort
+    python-language-server websockets isort selenium
   ];
   python-with-my-packages = pkgs.python38.withPackages my-python-packages;
+  openseeface = import ./custom_pkg/openseeface.nix;
 in
 {
   imports =
