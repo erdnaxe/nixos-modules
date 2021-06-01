@@ -35,19 +35,10 @@ in
   # Use networkmanager to manage network
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
-  networking.hosts = {
-    # "127.0.0.1" = [ "rss-bridge.localhost" ];
-  };
-
-  # Set your time zone.
-  time.timeZone = "Europe/Paris";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "fr";
-  };
+  time.timeZone = "Europe/Paris";
+  console.keyMap = "fr";
 
   # Fonts
   fonts.fonts = with pkgs; [
@@ -77,13 +68,20 @@ in
   };
   services.system-config-printer.enable = true;
   services.redshift.enable = true;
-  #services.pipewire.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
+  # Real-time scheduling for Pipewire
+  security.rtkit.enable = true;
 
   # Approximative geographic location for redshift
   location.latitude = 48.85;
   location.longitude = 2.35;
-
-  environment.variables = { EDITOR = "vim"; };
 
   # Enable sound.
   sound.enable = true;
@@ -120,36 +118,39 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  environment.variables = { EDITOR = "vim"; };
+  environment.defaultPackages = [];
   environment.systemPackages = with pkgs; [
     # Basic tools
     wget utillinux pciutils file mosh dmidecode inetutils jq vulkan-tools
     clinfo pass playerctl screen tmux nvtop tree wget rsync nettools
     python-with-my-packages scrot binutils-unwrapped appimage-run
     lm_sensors ripgrep mpc_cli ntfs3g patchelf nix-prefetch-git
-    usbutils
+    usbutils strace
 
     # Archiver
     zip unzip p7zip unrar
 
     # Audiovisual
     ffmpeg-full espeak opusTools
+    # openseeface: removed because of poor maintenability of onnxruntime
 
     # Graphical applications
-    firefox thunderbird element-desktop steam-run wine
-    winetricks discord xournalpp apache-directory-studio
-    audacity obs-studio meld skypeforlinux picard
-    vscode gimp keepassxc vlc zoom-us tdesktop libreoffice-fresh
+    firefox brave thunderbird steam-run wineWowPackages.staging
+    winetricks xournalpp apache-directory-studio
+    audacity obs-studio meld picard
+    vscode gimp keepassxc vlc zoom-us libreoffice-fresh
     inkscape multimc krita blender musescore owncloud-client
     cura handbrake evince xlockmore puredata qemu gnome3.file-roller
     gource arandr dolphinEmu gnome3.gedit texmaker cutecom
-    transmission baobab gparted mesa-demos i3lock pulseeffects rubberband
-    openscad printrun gnome3.gnome-disk-utility
+    transmission baobab gparted mesa-demos i3lock pulseeffects-pw rubberband
+    openscad printrun gnome3.gnome-disk-utility pavucontrol
 
     # Dicts
     aspellDicts.en aspellDicts.fr aspellDicts.en-computers aspellDicts.en-science
 
     # Development and writing
-    hugo black cargo go_1_16 yarn gcc gdb lua mono nodejs gnumake shellcheck
+    hugo black cargo go yarn gcc gdb lua mono nodejs gnumake shellcheck
     upx clang-tools vagrant pandoc graphviz poppler_utils
     (texlive.combine { inherit (texlive) scheme-medium moderncv fontawesome; })
 
@@ -199,20 +200,9 @@ in
   };
 
   # 32-bit libgl for wine
-  hardware.opengl.enable = true;
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
 
   # Extra codec
-  hardware.pulseaudio = {
-    enable = true;
-    support32Bit = true;
-    extraModules = [ pkgs.pulseaudio-modules-bt ];
-    package = pkgs.pulseaudioFull;
-    daemon.config = {
-      resample-method = "src-sinc-best-quality";
-      default-sample-rate = 96000;
-    };
-  };
   hardware.bluetooth.enable = true;
 }

@@ -17,16 +17,8 @@ in
         duration = 1;
         color = "#ffffff";
       };
-      mouse.url.modifiers = "Control";
       font.size = 9;
     };
-  };
-
-  programs.chromium = {
-    enable = true;
-    extensions = [
-      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-    ];
   };
 
   programs.git = {
@@ -38,10 +30,12 @@ in
 
   programs.htop = {
     enable = true;
-    hideThreads = true;
-    hideUserlandThreads = true;
-    showProgramPath = false;
-    treeView = true;
+    settings = {
+      hide_threads = true;
+      hide_userland_threads = true;
+      show_program_path = false;
+      tree_view = true;
+    };
   };
 
   programs.neovim = {
@@ -77,32 +71,31 @@ in
     theme = "solarized_alternate";
     terminal = "${pkgs.alacritty}/bin/alacritty";
     # See rofi -dump-xresources
-    extraConfig = ''
-      rofi.modi: window,run,drun,emoji,ssh,emoji,combi
-      rofi.combi-modi: window,drun,emoji,ssh,emoji
-      rofi.show-icons: true
-    '';
+    extraConfig = {
+      modi = "window,run,drun,emoji,ssh,emoji,combi";
+      combi-modi = "window,drun,emoji,ssh,emoji";
+      show-icons = true;
+    };
   };
 
-  # Need next version of NixOS
-  # programs.i3status-rust = {
-  #   enable = true;
-  #   bars = {
-  #     default = {
-  #       theme = "solarized-dark";
-  #       icons = "awesome5";
-  #       blocks = [
-  #         { block = "disk_space"; info_type = "available"; interval = 20; path = "/"; alias = "/"; unit = "GB"; warning = "20.0"; alert = "10.0"; }
-  #         { block = "memory"; display_type = "memory"; format_mem = "{Mup}%"; format_swap = "{SUp}%"; }
-  #         { block = "cpu"; interval = 1; format = "{barchart} {frequency}GHz"; }
-  #         { block = "sound"; }
-  #         { block = "backlight"; }
-  #         { block = "battery"; format = "{percentage}% {time}"; driver = "upower"; device = "DisplayDevice"; }
-  #         { block = "time"; format = "%Y/%m/%d %R"; interval = 20; }
-  #       ];
-  #     };
-  #   };
-  # };
+  programs.i3status-rust = {
+    enable = true;
+    bars = {
+      default = {
+        theme = "solarized-dark";
+        icons = "awesome5";
+        blocks = [
+          { block = "disk_space"; info_type = "available"; interval = 20; path = "/"; alias = "/"; unit = "GB"; warning = 20.0; alert = 10.0; }
+          { block = "memory"; display_type = "memory"; format_mem = "{mem_used_percents}"; format_swap = "{swap_used_percents}"; }
+          { block = "cpu"; interval = 1; format = "{barchart} {frequency}"; }
+          { block = "sound"; }
+          { block = "backlight"; }
+          { block = "battery"; format = "{percentage}% {time}"; driver = "upower"; device = "DisplayDevice"; }
+          { block = "time"; format = "%Y/%m/%d %R"; interval = 20; }
+        ];
+      };
+    };
+  };
 
   # Notification deamon
   services.dunst = {
@@ -132,11 +125,15 @@ in
     enable = true;
     musicDirectory = "/home/erdnaxe/Music";
     extraConfig = ''
-      default_permissions "read"
-
       audio_output {
           type "pulse"
           name "PulseAudio"
+      }
+      audio_output {
+          type "httpd"
+          name "HTTP Stream"
+          encoder "opus"
+          port "8000"
       }
     '';
   };
@@ -154,9 +151,12 @@ in
       ];
       bars = [
         {
-          fonts = ["Noto Sans Mono" "FontAwesome 10"];
+          fonts = {
+            names = ["Noto Sans Mono" "Font Awesome 5 Free"];
+            size = 10.0;
+          };
           position = "top";
-          statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${./i3status-rust.toml}";
+          statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs";
           trayOutput = "primary";
           colors = {
             separator = "#666666";
@@ -186,8 +186,8 @@ in
   # OBS plugins
   home.file = {
     ".config/obs-studio/plugins/v4l2sink".source = "${pkgs.obs-v4l2sink}/share/obs/obs-plugins/v4l2sink";
-    ".config/obs-studio/plugins/obs-websocket".source = "${obs-websocket}/share/obs/obs-plugins/obs-websocket";
-    ".config/obs-studio/plugins/StreamFX".source = "${obs-streamfx}/plugins/StreamFX";
+    #".config/obs-studio/plugins/obs-websocket".source = "${obs-websocket}/share/obs/obs-plugins/obs-websocket";
+    #".config/obs-studio/plugins/StreamFX".source = "${obs-streamfx}/plugins/StreamFX";
     #".config/obs-studio/plugins/spectralizer".source = ./external/spectralizer;
   };
 }
