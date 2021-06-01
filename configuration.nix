@@ -101,7 +101,7 @@ in
       home = "/home/erdnaxe";
       description = "Alexandre";
       shell = pkgs.zsh;
-      extraGroups = [ "wheel" "vboxusers" "adbusers" "wireshark" "networkmanager" ];
+      extraGroups = [ "scanner" "lp" "wheel" "vboxusers" "adbusers" "wireshark" "networkmanager" ];
     };
   };
 
@@ -202,7 +202,6 @@ in
   # 32-bit libgl for wine
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-
-  # Extra codec
   hardware.bluetooth.enable = true;
+  hardware.sane.enable = true;
 }
