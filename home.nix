@@ -90,26 +90,9 @@ in
           { block = "cpu"; interval = 1; format = "{barchart} {frequency}"; }
           { block = "sound"; }
           { block = "backlight"; }
-          { block = "battery"; format = "{percentage}% {time}"; driver = "upower"; device = "DisplayDevice"; }
+          { block = "battery"; format = "{percentage} {time}"; driver = "upower"; device = "DisplayDevice"; }
           { block = "time"; format = "%Y/%m/%d %R"; interval = 20; }
         ];
-      };
-    };
-  };
-
-  # Notification deamon
-  services.dunst = {
-    enable = true;
-    settings = {
-      global = {
-        geometry = "300x5-30+50";
-        transparency = 10;
-        font = "Noto Sans Mono 11";
-        padding = 8;
-        horizontal_padding = 8;
-        idle_threshold = 120;
-        icon_position = "left";
-        max_icon_size = 16;
       };
     };
   };
@@ -185,7 +168,6 @@ in
 
   # OBS plugins
   home.file = {
-    ".config/obs-studio/plugins/v4l2sink".source = "${pkgs.obs-v4l2sink}/share/obs/obs-plugins/v4l2sink";
     #".config/obs-studio/plugins/obs-websocket".source = "${obs-websocket}/share/obs/obs-plugins/obs-websocket";
     #".config/obs-studio/plugins/StreamFX".source = "${obs-streamfx}/plugins/StreamFX";
     #".config/obs-studio/plugins/spectralizer".source = ./external/spectralizer;

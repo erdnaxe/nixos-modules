@@ -74,6 +74,30 @@ in
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+    media-session.config.bluez-monitor.rules = [
+      {
+        # Matches all cards
+        matches = [ { "device.name" = "~bluez_card.*"; } ];
+        actions = {
+          "update-props" = {
+            "bluez5.reconnect-profiles" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
+            # mSBC is not expected to work on all headset + adapter combinations.
+            "bluez5.msbc-support" = true;
+          };
+        };
+      }
+      {
+        matches = [
+          # Matches all sources
+          { "node.name" = "~bluez_input.*"; }
+          # Matches all outputs
+          { "node.name" = "~bluez_output.*"; }
+        ];
+        actions = {
+          "node.pause-on-idle" = false;
+        };
+      }
+    ];
   };
 
   # Real-time scheduling for Pipewire
@@ -119,14 +143,13 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.variables = { EDITOR = "vim"; };
-  environment.defaultPackages = [];
   environment.systemPackages = with pkgs; [
     # Basic tools
     wget utillinux pciutils file mosh dmidecode inetutils jq vulkan-tools
-    clinfo pass playerctl screen tmux nvtop tree wget rsync nettools
+    clinfo pass playerctl screen tmux nvtop tree nettools
     python-with-my-packages scrot binutils-unwrapped appimage-run
     lm_sensors ripgrep mpc_cli ntfs3g patchelf nix-prefetch-git
-    usbutils strace
+    usbutils
 
     # Archiver
     zip unzip p7zip unrar
@@ -143,8 +166,8 @@ in
     inkscape multimc krita blender musescore owncloud-client
     cura handbrake evince xlockmore puredata qemu gnome3.file-roller
     gource arandr dolphinEmu gnome3.gedit texmaker cutecom
-    transmission baobab gparted mesa-demos i3lock pulseeffects-pw rubberband
-    openscad printrun gnome3.gnome-disk-utility pavucontrol
+    transmission baobab gparted mesa-demos i3lock-fancy-rapid pulseeffects-pw rubberband
+    openscad printrun gnome3.gnome-disk-utility pavucontrol pamixer
 
     # Dicts
     aspellDicts.en aspellDicts.fr aspellDicts.en-computers aspellDicts.en-science
