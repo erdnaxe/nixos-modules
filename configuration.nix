@@ -7,17 +7,17 @@
 let
   # System python
   my-python-packages = python-packages: with python-packages; [
-    pandas requests numpy matplotlib binwalk ROPGadget virtualenv tox ldap ansible
+    pandas requests numpy matplotlib binwalk virtualenv tox ldap ansible
     autopep8 yapf youtube-dl scapy ipykernel jupyterlab jupyterlab_server
     python-language-server websockets isort selenium
   ];
   python-with-my-packages = pkgs.python38.withPackages my-python-packages;
-  openseeface = import ./custom_pkg/openseeface.nix;
 in
 {
   imports =
     [
       <home-manager/nixos>
+      <nixpkgs/nixos/modules/profiles/base.nix>
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -29,7 +29,7 @@ in
   # Use the systemd-boot EFI boot loader, add ARM emulation and kernel modules
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.binfmt.emulatedSystems = [ "armv6l-linux" "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   # Use networkmanager to manage network
@@ -140,23 +140,24 @@ in
   # Allow non-free software such as VSCode
   nixpkgs.config.allowUnfree = true;
 
+  # Disk space saver
+  nix.autoOptimiseStore = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.variables = { EDITOR = "vim"; };
   environment.systemPackages = with pkgs; [
     # Basic tools
-    wget utillinux pciutils file mosh dmidecode inetutils jq vulkan-tools
-    clinfo pass playerctl screen tmux nvtop tree nettools
+    wget utillinux file mosh dmidecode inetutils jq vulkan-tools
+    clinfo pass playerctl tmux nvtop tree nettools
     python-with-my-packages scrot binutils-unwrapped appimage-run
     lm_sensors ripgrep mpc_cli ntfs3g patchelf nix-prefetch-git
-    usbutils
 
     # Archiver
-    zip unzip p7zip unrar
+    p7zip unrar
 
     # Audiovisual
     ffmpeg-full espeak opusTools
-    # openseeface: removed because of poor maintenability of onnxruntime
 
     # Graphical applications
     firefox brave thunderbird steam-run wineWowPackages.staging
@@ -164,9 +165,9 @@ in
     audacity obs-studio meld picard
     vscode gimp keepassxc vlc zoom-us libreoffice-fresh
     inkscape multimc krita blender musescore owncloud-client
-    cura handbrake evince xlockmore puredata qemu gnome3.file-roller
+    cura handbrake evince puredata qemu gnome3.file-roller
     gource arandr dolphinEmu gnome3.gedit texmaker cutecom
-    transmission baobab gparted mesa-demos i3lock-fancy-rapid pulseeffects-pw rubberband
+    transmission baobab gparted i3lock-fancy-rapid pulseeffects-pw rubberband
     openscad printrun gnome3.gnome-disk-utility pavucontrol pamixer
 
     # Dicts
@@ -178,8 +179,8 @@ in
     (texlive.combine { inherit (texlive) scheme-medium moderncv fontawesome; })
 
     # CTF
-    socat netcat-gnu killall testdisk goaccess volatility sqlmap apktool
-    bettercap pngcheck john jd-gui radare2 nmap-graphical ghidra-bin
+    netcat-gnu killall goaccess volatility sqlmap apktool
+    bettercap pngcheck john jd-gui nmap-graphical ghidra-bin
     inspectrum wireshark-qt gnuradio wabt
 
     # Android
