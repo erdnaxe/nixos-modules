@@ -202,10 +202,13 @@ in
   virtualisation.virtualbox.host.enable = true;
 
   # Open ports in the firewall.
+  # 51820 is wireguard
   # networking.firewall.allowedTCPPorts = [ 4444 ];
-  # networking.firewall.allowedUDPPorts = [ 5004 ];
+  networking.firewall.allowedUDPPorts = [ 51820 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  # For wireguard compatibility
+  networking.firewall.checkReversePath = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
