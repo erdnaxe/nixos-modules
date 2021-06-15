@@ -163,13 +163,16 @@ in
           };
         }
       ];
+      keybindings = pkgs.lib.mkOptionDefault {
+        "Control+Mod1+l" = "exec i3lock-fancy-rapid 50 10";
+        "Mod4+p" = "exec passmenu";
+        "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5";
+        "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5";
+        "XF86AudioPlay" = "exec --no-startup-id playerctl play-pause";
+        "XF86AudioPause" = "exec --no-startup-id playerctl play-pause";
+        "XF86AudioNext" = "exec --no-startup-id playerctl next";
+        "XF86AudioPrev" = "exec --no-startup-id playerctl previous";
+      };
     };
-  };
-
-  # OBS plugins
-  home.file = {
-    #".config/obs-studio/plugins/obs-websocket".source = "${obs-websocket}/share/obs/obs-plugins/obs-websocket";
-    #".config/obs-studio/plugins/StreamFX".source = "${obs-streamfx}/plugins/StreamFX";
-    #".config/obs-studio/plugins/spectralizer".source = ./external/spectralizer;
   };
 }
