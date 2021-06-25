@@ -14,6 +14,16 @@
     windowManager.i3.enable = true;
   };
 
+  # Graphical apps
+  environment.systemPackages = with pkgs; [
+    firefox xournalpp vlc evince pavucontrol
+  ];
+
+  # Fonts
+  fonts.fonts = with pkgs; [
+    dejavu_fonts powerline-fonts font-awesome gyre-fonts
+  ];
+
   # Sound with Pipewire
   sound.enable = true;
   services.pipewire = {
@@ -93,11 +103,11 @@
         bars = [
           {
             fonts = {
-              names = ["Noto Sans Mono" "Font Awesome 5 Free"];
+              names = ["DejaVu Sans Mono for Powerline" "Font Awesome 5 Free"];
               size = 10.0;
             };
             position = "top";
-            statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs";
+            statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs $HOME/.config/i3status-rust/config-default.toml";
             trayOutput = "primary";
             colors = {
               separator = "#666666";
