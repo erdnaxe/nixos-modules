@@ -7,6 +7,7 @@
     ./locale.nix
     ./nix.nix
     ./package.nix
+    ./user.nix
     ./zsh.nix
   ];
 }

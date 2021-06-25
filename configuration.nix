@@ -26,6 +26,7 @@ in
       ./modules/base
       ./modules/services/bluetooth.nix
       ./modules/services/graphical-desktop.nix
+      ./modules/services/music-player.nix
       ./modules/services/printing.nix
     ];
 
@@ -52,30 +53,6 @@ in
 
   # XDG portal for Flatpak
   xdg.portal.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # wheel for sudo
-  users = {
-    mutableUsers = false;
-    users.root.hashedPassword = "*";
-    users.erdnaxe = {
-      uid = 1000;
-      passwordFile = "/etc/nixos/erdnaxe_password.secret";
-      isNormalUser = true;
-      home = "/home/erdnaxe";
-      description = "Alexandre";
-      shell = pkgs.zsh;
-      extraGroups = [ "scanner" "lp" "wheel" "vboxusers" "adbusers" "wireshark" "networkmanager" ];
-    };
-  };
-
-  # By default, Home Manager uses a private pkgs instance that is configured
-  # via the home-manager.users.<name>.nixpkgs options.
-  # To instead use the global pkgs that is configured via the system
-  home-manager.useGlobalPkgs = true;
-
-  # Import home configuration
-  home-manager.users.erdnaxe = import ./home.nix;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
