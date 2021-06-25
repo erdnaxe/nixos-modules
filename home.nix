@@ -88,6 +88,7 @@ in
           { block = "disk_space"; info_type = "available"; interval = 20; path = "/"; alias = "/"; unit = "GB"; warning = 20.0; alert = 10.0; }
           { block = "memory"; display_type = "memory"; format_mem = "{mem_used_percents}"; format_swap = "{swap_used_percents}"; }
           { block = "cpu"; interval = 1; format = "{barchart} {frequency}"; }
+          { block = "music"; }
           { block = "sound"; }
           { block = "backlight"; }
           { block = "battery"; format = "{percentage} {time}"; driver = "upower"; device = "DisplayDevice"; }
@@ -164,14 +165,14 @@ in
         }
       ];
       keybindings = pkgs.lib.mkOptionDefault {
-        "Control+Mod1+l" = "exec i3lock-fancy-rapid 50 10";
+        "Control+Mod1+l" = "exec ${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 50 10";
         "Mod4+p" = "exec passmenu";
-        "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5";
-        "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5";
-        "XF86AudioPlay" = "exec --no-startup-id playerctl play-pause";
-        "XF86AudioPause" = "exec --no-startup-id playerctl play-pause";
-        "XF86AudioNext" = "exec --no-startup-id playerctl next";
-        "XF86AudioPrev" = "exec --no-startup-id playerctl previous";
+        "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pamixer}/bin/pamixer -i 5";
+        "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pamixer}/bin/pamixer -d 5";
+        "XF86AudioPlay" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
+        "XF86AudioPause" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
+        "XF86AudioNext" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl next";
+        "XF86AudioPrev" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl previous";
       };
     };
   };

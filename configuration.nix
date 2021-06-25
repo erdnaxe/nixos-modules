@@ -16,14 +16,17 @@ in
 {
   imports =
     [
-      <home-manager/nixos>
-      <nixpkgs/nixos/modules/profiles/base.nix>
-
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
       # Machine-specific configuration
       ./local-configuration.nix
+
+      # Import modules
+      ./modules/base
+      ./modules/services/bluetooth.nix
+      ./modules/services/graphical-desktop.nix
+      ./modules/services/printing.nix
     ];
 
   # Use the systemd-boot EFI boot loader, add ARM emulation and kernel modules
@@ -36,10 +39,6 @@ in
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
 
-  # Select internationalisation properties.
-  time.timeZone = "Europe/Paris";
-  console.keyMap = "fr";
-
   # Fonts
   fonts.fonts = with pkgs; [
     noto-fonts noto-fonts-cjk noto-fonts-emoji
@@ -49,66 +48,7 @@ in
 
   # Services
   services.flatpak.enable = true;
-  services.blueman.enable = true;
-  services.xserver = {
-    enable = true;
-    layout = "fr";  # fr azerty keyboard
-    libinput.enable = true;  # touchpad support
-    displayManager.lightdm.enable = true;
-    desktopManager.xfce = {
-      enable = true;
-      noDesktop = true;
-      enableXfwm = false;
-    };
-    windowManager.i3.enable = true;
-  };
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [ gutenprint gutenprintBin ];
-  };
-  services.system-config-printer.enable = true;
   services.redshift.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-    media-session.config.bluez-monitor.rules = [
-      {
-        # Matches all cards
-        matches = [ { "device.name" = "~bluez_card.*"; } ];
-        actions = {
-          "update-props" = {
-            "bluez5.reconnect-profiles" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
-            # mSBC is not expected to work on all headset + adapter combinations.
-            "bluez5.msbc-support" = true;
-          };
-        };
-      }
-      {
-        matches = [
-          # Matches all sources
-          { "node.name" = "~bluez_input.*"; }
-          # Matches all outputs
-          { "node.name" = "~bluez_output.*"; }
-        ];
-        actions = {
-          "node.pause-on-idle" = false;
-        };
-      }
-    ];
-  };
-
-  # Real-time scheduling for Pipewire
-  security.rtkit.enable = true;
-
-  # Approximative geographic location for redshift
-  location.latitude = 48.85;
-  location.longitude = 2.35;
-
-  # Enable sound.
-  sound.enable = true;
 
   # XDG portal for Flatpak
   xdg.portal.enable = true;
@@ -137,20 +77,13 @@ in
   # Import home configuration
   home-manager.users.erdnaxe = import ./home.nix;
 
-  # Allow non-free software such as VSCode
-  nixpkgs.config.allowUnfree = true;
-
-  # Disk space saver
-  nix.autoOptimiseStore = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.variables = { EDITOR = "vim"; };
   environment.systemPackages = with pkgs; [
     # Basic tools
-    wget utillinux file mosh dmidecode inetutils jq vulkan-tools
-    clinfo pass playerctl tmux nvtop tree nettools
-    python-with-my-packages scrot binutils-unwrapped appimage-run
+    wget utillinux file dmidecode inetutils jq
+    clinfo pass tmux nvtop tree nettools
+    python-with-my-packages binutils-unwrapped appimage-run
     lm_sensors ripgrep mpc_cli ntfs3g patchelf nix-prefetch-git
 
     # Archiver
@@ -165,10 +98,10 @@ in
     audacity obs-studio meld picard
     vscode gimp keepassxc vlc zoom-us libreoffice-fresh
     inkscape multimc krita blender musescore owncloud-client
-    cura handbrake evince puredata qemu gnome3.file-roller
+    cura handbrake evince qemu gnome3.file-roller
     gource arandr dolphinEmu gnome3.gedit texmaker cutecom
-    transmission baobab gparted i3lock-fancy-rapid pulseeffects-pw rubberband
-    openscad printrun gnome3.gnome-disk-utility pavucontrol pamixer
+    transmission baobab gparted
+    openscad printrun gnome3.gnome-disk-utility pavucontrol
 
     # Dicts
     aspellDicts.en aspellDicts.fr aspellDicts.en-computers aspellDicts.en-science
@@ -218,17 +151,7 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.09"; # Did you read the comment?
 
-  # Oh my Zsh!
-  programs.zsh.enable = true;
-  programs.zsh.ohMyZsh = {
-    enable = true;
-    plugins = [ "git" "python" "man" "sudo" "adb" ];
-    theme = "agnoster";
-  };
-
   # 32-bit libgl for wine
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-  hardware.bluetooth.enable = true;
-  hardware.sane.enable = true;
 }
