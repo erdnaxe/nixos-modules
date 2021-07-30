@@ -4,7 +4,6 @@
   # XFCE + i3 desktop
   services.xserver = {
     enable = true;
-    libinput.enable = true;  # touchpad and wacom support
     displayManager.lightdm.enable = true;
     desktopManager.xfce = {
       enable = true;
