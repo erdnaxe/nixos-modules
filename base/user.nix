@@ -11,7 +11,7 @@
       home = "/home/erdnaxe";
       description = "Alexandre";
       shell = pkgs.zsh;
-      extraGroups = [ "scanner" "lp" "wheel" "vboxusers" "adbusers" "wireshark" "networkmanager" ];
+      extraGroups = [ "wheel" ];
     };
   };
 }
