@@ -10,5 +10,6 @@
   services.system-config-printer.enable = true;
 
   # Scanner
-  hardware.sane.enable = true;
+  # Disabled because of incompatibility with cups
+  #hardware.sane.enable = true;
 }
