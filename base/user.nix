@@ -11,7 +11,7 @@
       home = "/home/erdnaxe";
       description = "Alexandre";
       shell = pkgs.zsh;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "dialout" ];
     };
   };
 }
