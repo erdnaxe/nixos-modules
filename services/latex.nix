@@ -8,7 +8,7 @@
       # beamerposter
       beamerposter type1cm tcolorbox environ csquotes biber
 
-      titlepic moderncv fontawesome biblatex;
+      titlepic moderncv fontawesome biblatex multirow arydshln;
     })
   ];
 }
