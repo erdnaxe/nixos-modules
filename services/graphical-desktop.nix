@@ -88,6 +88,10 @@
       enable = true;
       vSync = true; # Fix screen tearing
     };
+    services.screen-locker = {
+      enable = true;
+      lockCmd = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
+    };
     xsession.windowManager.i3 = {
       enable = true;
       config = {
