@@ -32,6 +32,7 @@
   };
 
   # https://github.com/NixOS/nixpkgs/pull/134174
+  # To remove in NixOS 21.11
   systemd.services.grafana = {
     serviceConfig = {
       # Hardening

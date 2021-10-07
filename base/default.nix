@@ -3,6 +3,7 @@
 {
   imports = [
     ./home-manager.nix
+    ./kernel.nix
     ./letsencrypt.nix
     ./locale.nix
     ./nix.nix
