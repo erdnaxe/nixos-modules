@@ -91,6 +91,12 @@
     services.screen-locker = {
       enable = true;
       lockCmd = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
+      inactiveInterval = 60;
+    };
+    services.redshift = {
+      enable = true;
+      latitude = 48.85;
+      longitude = 2.35;
     };
     xsession.windowManager.i3 = {
       enable = true;
