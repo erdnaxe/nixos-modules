@@ -49,6 +49,7 @@
           color = "#ffffff";
         };
         font.size = 9;
+        colors.primary.background = "#1c1b22";
       };
     };
     programs.rofi = {
@@ -101,6 +102,7 @@
     xsession.windowManager.i3 = {
       enable = true;
       config = {
+        # exec --no-startup-id feh --bg-scale $HOME/.background-image
         modifier = "Mod4";
         terminal = "alacritty";
         menu = "rofi -show combi";
@@ -119,27 +121,18 @@
             statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs $HOME/.config/i3status-rust/config-default.toml";
             trayOutput = "primary";
             colors = {
-              separator = "#666666";
-              background = "#222222";
-              statusline = "#dddddd";
-              focusedWorkspace = {
-                border = "#0088cc";
-                background = "#0088cc";
-                text = "#ffffff";
-              };
-              activeWorkspace = {
-                border = "#333333";
-                background = "#333333";
-                text = "#ffffff";
-              };
-              inactiveWorkspace = {
-                border = "#333333";
-                background = "#333333";
-                text = "#888888";
-              };
+              background = "#1c1b22";
+              focusedWorkspace = { border = "#42414d"; background = "#42414d"; text = "#ffffff"; };
+              activeWorkspace = { border = "#1c1b22"; background = "#1c1b22"; text = "#929298"; };
+              inactiveWorkspace = { border = "#1c1b22"; background = "#1c1b22"; text = "#929298"; };
             };
           }
         ];
+        colors = {
+          focused = { background = "#42414d"; border = "#42414d"; childBorder = "#42414d"; indicator = "#2e9ef4"; text = "#ffffff"; };
+          focusedInactive = { background = "#1c1b22"; border = "#1c1b22"; childBorder = "#1c1b22"; indicator = "#292d2e"; text = "#929298"; };
+          unfocused = { background = "#1c1b22"; border = "#1c1b22"; childBorder = "#1c1b22"; indicator = "#292d2e"; text = "#929298"; };
+        };
         keybindings = pkgs.lib.mkOptionDefault {
           "Control+Mod1+l" = "exec ${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 50 10";
           "Mod4+p" = "exec passmenu";
