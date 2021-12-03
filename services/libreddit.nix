@@ -1,12 +1,4 @@
-let
-  unstable = import <nixos-unstable> {};
-in
 {
-  imports = [ <nixos-unstable/nixos/modules/services/misc/libreddit.nix> ];
-  nixpkgs.config.packageOverrides = pkgs: {
-    libreddit = unstable.libreddit;
-  };
-
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.libreddit = {

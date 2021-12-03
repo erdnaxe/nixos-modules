@@ -1,12 +1,4 @@
-let
-  unstable = import <nixos-unstable> {};
-in
 {
-  imports = [ <nixos-unstable/nixos/modules/services/misc/nitter.nix> ];
-  nixpkgs.config.packageOverrides = pkgs: {
-    nitter = unstable.nitter;
-  };
-
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.nitter = {

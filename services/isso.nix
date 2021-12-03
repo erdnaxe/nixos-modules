@@ -1,12 +1,4 @@
-let
-  unstable = import <nixos-unstable> {};
-in
 {
-  imports = [ <nixos-unstable/nixos/modules/services/web-apps/isso.nix> ];
-  nixpkgs.config.packageOverrides = pkgs: {
-    isso = unstable.isso;
-  };
-
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.isso = {
