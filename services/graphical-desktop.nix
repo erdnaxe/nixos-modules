@@ -15,7 +15,7 @@
 
   # Graphical apps
   environment.systemPackages = with pkgs; [
-    firefox xournalpp vlc evince pavucontrol
+    firefox xournalpp vlc mpv evince pavucontrol arandr
   ];
 
   # Fonts
