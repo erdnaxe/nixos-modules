@@ -7,13 +7,13 @@ with import <nixpkgs> {};
 
 buildGoModule rec {
   pname = "bmpc";
-  version = "unstable-2021-07-04";
+  version = "unstable-2021-12-03";
 
   src = fetchFromGitHub {
     owner = "erdnaxe";
     repo = "bmpc";
-    rev = "eb997d5dae1c8e498217aa460971526e60f59560";
-    sha256 = "1ligiy0ldmj3zhcl3gpjm4s6qjxh8bga89h8fiy14pr3xz6xdf44";
+    rev = "647cfd17fc37789c179358291f291a45a02df40c";
+    sha256 = "12i26qkpf908mszvpn1wcsbnfjfw75gaghqqf3z7fgvpdnam57da";
   };
 
   vendorSha256 = "0gzd6kckjm83n1qxmz60zv22hdgk6bb6zqqwb7a5gkzazjipqhkp";
