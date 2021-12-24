@@ -28,7 +28,7 @@ in
     after = [ "network.target" ];
     serviceConfig = {
       DynamicUser = true;
-      ExecStart = "${bmpc}/bin/bmpc";
+      ExecStart = "${bmpc}/bin/bmpc -listen-addr 0.0.0.0:8080";
       Restart = "on-failure";
       RestartSec = "2s";
       # Hardening
