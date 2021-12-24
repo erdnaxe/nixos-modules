@@ -70,13 +70,13 @@
       enable = true;
       bars = {
         default = {
-          theme = "solarized-dark";
+          theme = "native";
           icons = "awesome5";
           blocks = [
             { block = "disk_space"; info_type = "available"; interval = 20; path = "/"; alias = "/"; unit = "GB"; warning = 20.0; alert = 10.0; }
             { block = "memory"; display_type = "memory"; format_mem = "{mem_used_percents}"; format_swap = "{swap_used_percents}"; }
             { block = "cpu"; interval = 1; format = "{barchart} {frequency}"; }
-            { block = "music"; }
+            { block = "music"; buttons = [ "play" "next" ]; }
             { block = "sound"; }
             { block = "backlight"; }
             { block = "battery"; format = "{percentage} {time}"; driver = "upower"; device = "DisplayDevice"; }
@@ -122,6 +122,7 @@
             trayOutput = "primary";
             colors = {
               background = "#1c1b22";
+              statusline = "#929298";
               focusedWorkspace = { border = "#42414d"; background = "#42414d"; text = "#ffffff"; };
               activeWorkspace = { border = "#1c1b22"; background = "#1c1b22"; text = "#929298"; };
               inactiveWorkspace = { border = "#1c1b22"; background = "#1c1b22"; text = "#929298"; };
