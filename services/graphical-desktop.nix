@@ -44,10 +44,6 @@
           lines = 30;
           columns = 140;
         };
-        bell = {
-          duration = 1;
-          color = "#ffffff";
-        };
         font.size = 9;
         colors.primary.background = "#1c1b22";
       };
