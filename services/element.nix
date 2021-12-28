@@ -18,7 +18,7 @@
         disable_3pid_login = true;
         integrations_ui_url = "";
         integrations_rest_url = "";
-        integrations_widgets_urls = [];
+        integrations_widgets_urls = [ ];
         bug_report_endpoint_url = "";
         showLabsSettings = true;
         jitsi.preferredDomain = "jitsi.crans.org";

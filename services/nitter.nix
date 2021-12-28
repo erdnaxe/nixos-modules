@@ -22,9 +22,7 @@
     virtualHosts."nitter.nanax.fr" = {
       enableACME = true;
       forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:3005";
-      };
+      locations."/" = { proxyPass = "http://127.0.0.1:3005"; };
     };
   };
 }

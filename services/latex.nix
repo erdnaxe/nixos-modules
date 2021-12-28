@@ -1,14 +1,16 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    (texlive.combine {
-      inherit (texlive) scheme-medium
+  environment.systemPackages = with pkgs;
+    [
+      (texlive.combine {
+        inherit (texlive)
+          scheme-medium
 
-      # beamerposter
-      beamerposter type1cm tcolorbox environ csquotes biber
+          # beamerposter
+          beamerposter type1cm tcolorbox environ csquotes biber
 
-      titlepic moderncv fontawesome biblatex multirow arydshln;
-    })
-  ];
+          titlepic moderncv fontawesome biblatex multirow arydshln;
+      })
+    ];
 }

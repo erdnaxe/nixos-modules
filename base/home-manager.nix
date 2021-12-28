@@ -5,7 +5,7 @@
   home-manager.users.erdnaxe = {
     programs.git = {
       enable = true;
-      userName  = "Alexandre Iooss";
+      userName = "Alexandre Iooss";
       userEmail = "erdnaxe@crans.org";
       signing.key = "6C79278F3FCDCC02";
     };
@@ -37,10 +37,7 @@
         set mouse=a
         set number
       '';
-      plugins = with pkgs.vimPlugins; [
-        vim-lastplace
-        vim-nix
-      ];
+      plugins = with pkgs.vimPlugins; [ vim-lastplace vim-nix ];
     };
   };
 }

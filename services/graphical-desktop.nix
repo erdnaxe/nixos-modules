@@ -15,12 +15,21 @@
 
   # Graphical apps
   environment.systemPackages = with pkgs; [
-    firefox xournalpp vlc mpv evince pavucontrol arandr
+    firefox
+    xournalpp
+    vlc
+    mpv
+    evince
+    pavucontrol
+    arandr
   ];
 
   # Fonts
   fonts.fonts = with pkgs; [
-    dejavu_fonts powerline-fonts font-awesome gyre-fonts
+    dejavu_fonts
+    powerline-fonts
+    font-awesome
+    gyre-fonts
   ];
 
   # Sound with Pipewire
@@ -50,9 +59,7 @@
     };
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi.override {
-        plugins = [ pkgs.rofi-emoji ];
-      };
+      package = pkgs.rofi.override { plugins = [ pkgs.rofi-emoji ]; };
       theme = "solarized_alternate";
       terminal = "${pkgs.alacritty}/bin/alacritty";
       # See rofi -dump-xresources

@@ -15,9 +15,7 @@
     virtualHosts."radicale.nanax.fr" = {
       enableACME = true;
       forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://localhost:5232";
-      };
+      locations."/" = { proxyPass = "http://localhost:5232"; };
     };
   };
 }

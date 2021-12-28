@@ -3,7 +3,7 @@
 #, buildGoPackage
 #, fetchFromGitHub
 #}:
-with import <nixpkgs> {};
+with import <nixpkgs> { };
 
 buildGoModule rec {
   pname = "bmpc";

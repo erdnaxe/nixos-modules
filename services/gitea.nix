@@ -10,11 +10,7 @@
     rootUrl = "https://git.iooss.fr/";
     # default to user gitea, database gitea
     database.type = "postgres";
-    settings = {
-      other = {
-        SHOW_FOOTER_VERSION = false;
-      };
-    };
+    settings = { other = { SHOW_FOOTER_VERSION = false; }; };
   };
 
   services.postgresql = {
@@ -31,9 +27,7 @@
     virtualHosts."git.iooss.fr" = {
       enableACME = true;
       forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://[::1]:3000";
-      };
+      locations."/" = { proxyPass = "http://[::1]:3000"; };
     };
   };
 }

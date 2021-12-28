@@ -1,4 +1,4 @@
-with import <nixpkgs> {};
+with import <nixpkgs> { };
 
 buildBazelPackage rec {
   pname = "lzr";
@@ -14,9 +14,7 @@ buildBazelPackage rec {
   #strictDeps = true;
   nativeBuildInputs = [ git ];
   bazelTarget = [ "//..." ];
-  bazelFlags = [
-    "--override_repository=com_google_absl=${abseil-cpp.src}"
-  ];
+  bazelFlags = [ "--override_repository=com_google_absl=${abseil-cpp.src}" ];
 
   patchPhase = ''
     sed -i 's=/usr/include/SDL2=${SDL2.dev}/include/SDL2=g' WORKSPACE
@@ -26,8 +24,7 @@ buildBazelPackage rec {
     sha256 = "0dass65w5vf65w54i9nvxpdwlfz1p245m737ybvsmfdjpqxvj2zd";
   };
 
-  buildAttrs = {
-  };
+  buildAttrs = { };
 
   #installPhase = ''
   #  echo TESTTEST
