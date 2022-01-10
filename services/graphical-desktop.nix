@@ -17,7 +17,6 @@
   environment.systemPackages = with pkgs; [
     firefox
     xournalpp
-    vlc
     mpv
     evince
     pavucontrol
