@@ -76,9 +76,9 @@
           theme = "native";
           icons = "awesome5";
           blocks = [
-            { block = "disk_space"; info_type = "available"; interval = 20; path = "/"; alias = "/"; unit = "GB"; warning = 20.0; alert = 10.0; }
-            { block = "memory"; display_type = "memory"; format_mem = "{mem_used_percents}"; format_swap = "{swap_used_percents}"; }
-            { block = "cpu"; interval = 1; format = "{barchart} {frequency}"; }
+            { block = "disk_space"; }
+            { block = "memory"; format_mem = "{mem_used_percents}"; format_swap = "{swap_used_percents}"; }
+            { block = "cpu"; format = "{barchart} {frequency}"; }
             { block = "music"; buttons = [ "play" "next" ]; }
             { block = "sound"; }
             { block = "backlight"; }
