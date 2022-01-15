@@ -91,6 +91,14 @@ stdenv.mkDerivation rec {
   # Some pre-built files contain /build/
   noAuditTmpdir = true;
   preFixup = ''
+    # Fix some hardcoded paths
+    for f in $(find $out -name "ISEWrap.sh" -o -name "ISEWrapReports.sh" -o -name "paUtil.tcl"); do
+      substituteInPlace $f --replace '/bin/touch' '${coreutils}/bin/touch'
+    done
+    for f in $(find $out -name "*.so" -exec grep -q '/bin/touch' {} \; -print); do
+      ${bbe}/bin/bbe -e 's=/bin/touch=touch     =' $f | ${moreutils}/bin/sponge $f
+    done
+
     mkdir $out/bin
     for d in $(find $out -name unwrapped -type d); do
         # Patch ELFs in unwrapped directories and wrap them
@@ -100,14 +108,10 @@ stdenv.mkDerivation rec {
         done
 
         # Link wrapped entry points
-        for f in $(find $d/../.. -maxdepth 1 -type f | xargs realpath); do
-            ln -s $f $out/bin/
+        for f in $(find $d/../* -maxdepth 0 -type f); do
+            echo "ln -sf $f $out/bin/"
+            ln -sf $f $out/bin/
         done
-    done
-
-    # Fix some hardcoded paths
-    for f in $(find $out -name "ISEWrap.sh" -o -name "ISEWrapReports.sh" -o -name "paUtil.tcl"); do
-      substituteInPlace $f --replace '/bin/touch' '${coreutils}/bin/touch'
     done
   '';
 
