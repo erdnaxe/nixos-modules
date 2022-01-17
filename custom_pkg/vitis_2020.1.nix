@@ -23,10 +23,12 @@ let
     xorg.libXtst
     xorg.libXxf86vm
     zlib
+    gnused
+    coreutils
   ];
 in
 stdenv.mkDerivation rec {
-  pname = "vivado";
+  pname = "vitis";
   version = "2020.1";
 
   src = requireFile rec {
@@ -56,6 +58,15 @@ stdenv.mkDerivation rec {
       exec = "vivado";
       categories = "Development";
     })
+    (makeDesktopItem {
+      name = "vitis";
+      desktopName = "Vitis ${version}";
+      genericName = "SDK for heterogeneous hardware";
+      comment = "Development of accelerated applications on heterogeneous hardware platforms";
+      icon = "vitis";
+      exec = "vitis";
+      categories = "Development";
+    })
   ];
 
   # Installer requires the use of FHS environment as it uses unpatched scripts
@@ -68,10 +79,10 @@ stdenv.mkDerivation rec {
   installPhase = ''
     # Can be generated using `./xsetup -b ConfigGen`
     cat <<EOF > install_config.txt
-    Edition=Vivado HL WebPACK
-    Product=Vivado
+    Edition=Vitis Unified Software Platform
+    Product=Vitis
     Destination=$out/opt
-    Modules=Virtex UltraScale+ HBM:0,Zynq UltraScale+ MPSoC:0,DocNav:1,Kintex UltraScale:0,Zynq-7000:1,Spartan-7:0,System Generator for DSP:0,Artix-7:0,Virtex UltraScale+:0,Kintex-7:0,Kintex UltraScale+:0,Model Composer:0
+    Modules=Zynq UltraScale+ MPSoC:0,DocNav:0,Virtex UltraScale+ HBM:0,Virtex UltraScale+ 58G:0,Virtex UltraScale+ 58G ES:0,Kintex-7:0,Virtex UltraScale+:0,Zynq-7000:1,Kintex UltraScale+:0,Model Composer:0,Spartan-7:0,Install devices for Alveo and Xilinx edge acceleration platforms:0,Kintex UltraScale:0,Virtex UltraScale:0,Engineering Sample Devices for Custom Platforms:0,Zynq UltraScale+ RFSoC:0,Versal AI Core Series ES1:0,System Generator for DSP:0,Versal Prime Series ES1:0,Artix-7:0,Virtex-7:0,Virtex UltraScale+ HBM ES:0,Zynq UltraScale+ RFSoC ES:0
     InstallOptions=
     CreateProgramGroupShortcuts=0
     ProgramGroupFolder=Xilinx Design Tools
@@ -84,12 +95,14 @@ stdenv.mkDerivation rec {
 
     # Launcher icon
     install -Dm644 $out/opt/Vivado/${version}/doc/images/vivado_logo.png $out/share/pixmaps/vivado.png
+    install -Dm644 $out/opt/Vitis/${version}/doc/images/ide_icon.png $out/share/pixmaps/vitis.png
   '';
 
   # Some ELFs target embedded boards
   dontPatchELF = true;
   # Some pre-built files contain /build/
   noAuditTmpdir = true;
+  # TODO: /bin/ symlinks do not work
   preFixup = ''
     # Fix some hardcoded paths
     for f in $(find $out -name "ISEWrap.sh" -o -name "ISEWrapReports.sh" -o -name "paUtil.tcl"); do
@@ -99,6 +112,7 @@ stdenv.mkDerivation rec {
       ${bbe}/bin/bbe -e 's=/bin/touch=touch     =' $f | ${moreutils}/bin/sponge $f
     done
 
+    # Patch, wrap and link entry points
     mkdir $out/bin
     for d in $(find $out -name unwrapped -type d); do
         # Patch ELFs in unwrapped directories and wrap them
@@ -112,6 +126,11 @@ stdenv.mkDerivation rec {
             echo "ln -sf $f $out/bin/"
             ln -sf $f $out/bin/
         done
+    done
+
+    # Patch built-in Java and Eclipse
+    for f in $(find $out -name java -o -name eclipse -type f); do
+      patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" $f || true
     done
   '';
 
