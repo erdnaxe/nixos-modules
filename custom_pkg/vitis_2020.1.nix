@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     })
     (makeDesktopItem {
       name = "vitis";
-      desktopName = "Vitis ${version}";
+      desktopName = "Vitis HLS ${version}";
       genericName = "SDK for heterogeneous hardware";
       comment = "Development of accelerated applications on heterogeneous hardware platforms";
       icon = "vitis";
