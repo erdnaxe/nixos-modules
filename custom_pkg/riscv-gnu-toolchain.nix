@@ -29,4 +29,12 @@ stdenv.mkDerivation {
   preBuildPhase = ''
     touch riscv-binutils/.git riscv-gcc/.git riscv-glibc/.git riscv-dejagnu/.git riscv-newlib/.git riscv-gdb/.git qemu/.git
   '';
+
+  meta = with lib; {
+    homepage = "https://github.com/riscv-collab/riscv-gnu-toolchain";
+    description = "GNU toolchain for RISC-V, including GCC";
+    platforms = platforms.unix;
+    license = with licenses; [ mit gpl2Only lgpl2Only ];
+    maintainers = with maintainers; [ erdnaxe ];
+  };
 }

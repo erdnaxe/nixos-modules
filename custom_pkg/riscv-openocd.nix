@@ -20,6 +20,7 @@ stdenv.mkDerivation rec {
     "--disable-internal-jimtcl"
   ];
 
+  # TODO: be more specific
   NIX_CFLAGS_COMPILE = [
     "-Wno-error"
     #"-Wno-error=cpp"
@@ -35,5 +36,13 @@ stdenv.mkDerivation rec {
     fi
     ln -s "$rules" "$out/etc/udev/rules.d/"
   '';
+
+  meta = with lib; {
+    homepage = "https://github.com/riscv/riscv-openocd";
+    description = "Fork of OpenOCD that has RISC-V support";
+    platforms = platforms.unix;
+    license = with licenses; [ gpl2Plus ];
+    maintainers = with maintainers; [ erdnaxe ];
+  };
 }
 
