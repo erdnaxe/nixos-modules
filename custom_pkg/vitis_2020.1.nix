@@ -46,9 +46,63 @@ stdenv.mkDerivation rec {
   };
   sourceRoot = "Xilinx_Unified_2020.1_0602_1208";
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [ makeWrapper copyDesktopItems ];
 
   desktopItems = [
+    (makeDesktopItem {
+      name = "docnav";
+      desktopName = "Documentation Navigator ${version}";
+      genericName = "Documentation Navigator";
+      comment = "Xilinx Documentation Navigator";
+      icon = "docnav";
+      exec = "docnav";
+      categories = "Development";
+    })
+    (makeDesktopItem {
+      name = "xmc_sysgen";
+      desktopName = "Model Composer and System Generator ${version}";
+      genericName = "Model Composer and System Generator";
+      comment = "Model Composer and System Generator";
+      icon = "xmc_sysgen";
+      exec = "xmc_sysgen";
+      categories = "Development";
+    })
+    (makeDesktopItem {
+      name = "vitis";
+      desktopName = "Vitis ${version}";
+      genericName = "SDK for heterogeneous hardware";
+      comment = "Development of accelerated applications on heterogeneous hardware platforms";
+      icon = "vitis";
+      exec = "vitis";
+      categories = "Development";
+    })
+    (makeDesktopItem {
+      name = "vitis_hls";
+      desktopName = "Vitis HLS ${version}";
+      genericName = "SDK for heterogeneous hardware";
+      comment = "Development of accelerated applications on heterogeneous hardware platforms";
+      icon = "vitis_hls";
+      exec = "vitis_hls";
+      categories = "Development";
+    })
+    (makeDesktopItem {
+      name = "vitis_hls_terminal";
+      desktopName = "Vitis HLS Command Prompt ${version}";
+      genericName = "Command Line";
+      comment = "Vitis HLS Command Prompt";
+      icon = "terminal";
+      exec = "${xterm}/bin/xterm -e vitis_hls -i";
+      categories = "Development";
+    })
+    (makeDesktopItem {
+      name = "vlm";
+      desktopName = "Manage Xilinx Licenses ${version}";
+      genericName = "Licenses generator";
+      comment = "Manage Xilinx Licenses";
+      icon = "vlm";
+      exec = "vlm";
+      categories = "Development";
+    })
     (makeDesktopItem {
       name = "vivado";
       desktopName = "Vivado ${version}";
@@ -59,12 +113,21 @@ stdenv.mkDerivation rec {
       categories = "Development";
     })
     (makeDesktopItem {
-      name = "vitis";
-      desktopName = "Vitis HLS ${version}";
-      genericName = "SDK for heterogeneous hardware";
-      comment = "Development of accelerated applications on heterogeneous hardware platforms";
-      icon = "vitis";
-      exec = "vitis";
+      name = "vivado_tcl";
+      desktopName = "Vivado Tcl Shell ${version}";
+      genericName = "Command Line";
+      comment = "Vivado Tcl Shell";
+      icon = "terminal";
+      exec = "vivado -mode tcl";
+      categories = "Development";
+    })
+    (makeDesktopItem {
+      name = "xsct";
+      desktopName = "Xilinx Software Command Line Tool ${version}";
+      genericName = "Command Line";
+      comment = "Xilinx Software Command Line Tool";
+      icon = "terminal";
+      exec = "xsct";
       categories = "Development";
     })
   ];
@@ -94,8 +157,12 @@ stdenv.mkDerivation rec {
     ${installEnv}/bin/${installEnv.name}
 
     # Launcher icon
-    install -Dm644 $out/opt/Vivado/${version}/doc/images/vivado_logo.png $out/share/pixmaps/vivado.png
+    install -Dm644 $out/opt/DocNav/resources/doc_nav_application_48.png $out/share/pixmaps/docnav.png
+    install -Dm644 $out/opt/Model_Composer/${version}/data/images/Compiler.png $out/share/pixmaps/xmc_sysgen.png
+    install -Dm644 $out/opt/Vitis/${version}/doc/images/ide_icon.png $out/share/pixmaps/vitis_hls.png
     install -Dm644 $out/opt/Vitis/${version}/doc/images/ide_icon.png $out/share/pixmaps/vitis.png
+    install -Dm644 $out/opt/Vivado/${version}/data/vlm/images/vlm_logo.png $out/share/pixmaps/vlm.png
+    install -Dm644 $out/opt/Vivado/${version}/doc/images/vivado_logo.png $out/share/pixmaps/vivado.png
   '';
 
   # Some ELFs target embedded boards
