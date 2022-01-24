@@ -138,6 +138,9 @@ stdenv.mkDerivation rec {
     name = "${pname}-${version}-installEnv";
     targetPkgs = pkgs: libs;
     runScript = "./xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt";
+    profile = ''
+      export LANG=C.UTF-8
+    '';
   };
   installPhase = ''
     # Can be generated using `./xsetup -b ConfigGen`
@@ -145,7 +148,7 @@ stdenv.mkDerivation rec {
     Edition=Vitis Unified Software Platform
     Product=Vitis
     Destination=$out/opt
-    Modules=Zynq UltraScale+ MPSoC:0,DocNav:0,Virtex UltraScale+ HBM:0,Virtex UltraScale+ 58G:0,Virtex UltraScale+ 58G ES:0,Kintex-7:0,Virtex UltraScale+:0,Zynq-7000:1,Kintex UltraScale+:0,Model Composer:0,Spartan-7:0,Install devices for Alveo and Xilinx edge acceleration platforms:0,Kintex UltraScale:0,Virtex UltraScale:0,Engineering Sample Devices for Custom Platforms:0,Zynq UltraScale+ RFSoC:0,Versal AI Core Series ES1:0,System Generator for DSP:0,Versal Prime Series ES1:0,Artix-7:0,Virtex-7:0,Virtex UltraScale+ HBM ES:0,Zynq UltraScale+ RFSoC ES:0
+    Modules=Zynq UltraScale+ MPSoC:0,DocNav:1,Virtex UltraScale+ HBM:0,Virtex UltraScale+ 58G:0,Virtex UltraScale+ 58G ES:0,Kintex-7:0,Virtex UltraScale+:0,Zynq-7000:1,Kintex UltraScale+:0,Model Composer:1,Spartan-7:0,Install devices for Alveo and Xilinx edge acceleration platforms:0,Kintex UltraScale:0,Virtex UltraScale:0,Engineering Sample Devices for Custom Platforms:0,Zynq UltraScale+ RFSoC:0,Versal AI Core Series ES1:0,System Generator for DSP:0,Versal Prime Series ES1:0,Artix-7:0,Virtex-7:0,Virtex UltraScale+ HBM ES:0,Zynq UltraScale+ RFSoC ES:0
     InstallOptions=
     CreateProgramGroupShortcuts=0
     ProgramGroupFolder=Xilinx Design Tools
@@ -173,7 +176,7 @@ stdenv.mkDerivation rec {
   preFixup = ''
     # Fix some hardcoded paths
     for f in $(find $out -name "ISEWrap.sh" -o -name "ISEWrapReports.sh" -o -name "paUtil.tcl"); do
-      substituteInPlace $f --replace '/bin/touch' '${coreutils}/bin/touch'
+      #substituteInPlace $f --replace '/bin/touch' '${coreutils}/bin/touch'
     done
     for f in $(find $out -name "*.so" -exec grep -q '/bin/touch' {} \; -print); do
       ${bbe}/bin/bbe -e 's=/bin/touch=touch     =' $f | ${moreutils}/bin/sponge $f
