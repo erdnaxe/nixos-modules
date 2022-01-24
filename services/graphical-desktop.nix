@@ -63,8 +63,8 @@
       terminal = "${pkgs.alacritty}/bin/alacritty";
       # See rofi -dump-xresources
       extraConfig = {
-        modi = "window,run,drun,ssh,emoji,combi";
-        combi-modi = "window,drun,ssh,emoji";
+        modi = "window,run,drun,emoji,combi";
+        combi-modi = "window,drun,emoji";
         show-icons = true;
       };
     };
