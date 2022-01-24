@@ -35,4 +35,15 @@
     SystemCallFilter = [ "@system-service" "~@chown" "~@clock" "~@cpu-emulation" "~@debug" "~@module" "~@mount" "~@obsolete" "~@raw-io" "~@reboot" "~@resources" "~@swap" "~memfd_create" "~mincore" "~mlock" "~mlockall" "~personality" ];
     UMask = "0077";
   };
+
+  systemd.services.rtkit-daemon.serviceConfig = {
+    # Hardening
+    NoNewPrivileges = true;
+    PrivateTmp = true;
+    ProtectHome = true;
+    ProtectKernelModules = true;
+    ProtectSystem = "strict";
+    RestrictNamespaces = true;
+    SystemCallArchitectures = "native";
+  };
 }
