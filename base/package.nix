@@ -46,4 +46,27 @@
     RestrictNamespaces = true;
     SystemCallArchitectures = "native";
   };
+
+  systemd.services.NetworkManager.serviceConfig = {
+    # Hardening
+    ProtectKernelLogs = true;
+    ProtectKernelTunables = true;
+    ProtectKernelModules = true;
+    RestrictNamespaces = true;
+    SystemCallArchitectures = "native";
+  };
+
+  systemd.services.bluetooth.serviceConfig = {
+    # Hardening
+    NoNewPrivileges = true;
+    PrivateTmp = true;
+    ProtectClock = true;
+    ProtectControlGroups = true;
+    ProtectKernelLogs = true;
+    ProtectKernelTunables = true;
+    ProtectKernelModules = true;
+    RestrictAddressFamilies = [ "AF_UNIX" "AF_BLUETOOTH" ];
+    RestrictNamespaces = true;
+    SystemCallArchitectures = "native";
+  };
 }
