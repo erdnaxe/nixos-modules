@@ -12,8 +12,7 @@
   systemd.services.cups.serviceConfig = {
     # Hardening
     CapabilityBoundingSet = [ "CAP_CHOWN" "CAP_AUDIT_WRITE" "CAP_DAC_OVERRIDE" "CAP_FSETID" "CAP_KILL" "CAP_NET_BIND_SERVICE" "CAP_SETGID" "CAP_SETUID" ];
-    PrivateTmp = true;
-    ProtectClock = true;
+    # ProtectClock = true;  # breaks HP printer
     ProtectControlGroups = true;
     ProtectHome = true;
     ProtectHostname = true;
