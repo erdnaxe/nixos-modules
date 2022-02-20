@@ -89,4 +89,17 @@
     ProtectSystem = "full"; # OpenSUSE
     RestrictRealtime = true; # OpenSUSE
   };
+
+  systemd.services.postgresql.serviceConfig = {
+    NoNewPrivileges = true; # arch
+    PrivateDevices = true; # arch
+    PrivateTmp = true; # arch
+    ProtectControlGroups = true; # arch
+    ProtectHome = true; # arch
+    ProtectKernelModules = true; # arch
+    ProtectKernelTunables = true; # arch
+    RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ]; # arch
+    RestrictNamespaces = true; # arch
+    RestrictRealtime = true; # arch
+  };
 }
