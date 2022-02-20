@@ -39,10 +39,16 @@
   systemd.services.rtkit-daemon.serviceConfig = {
     # Hardening
     NoNewPrivileges = true;
-    PrivateTmp = true;
-    ProtectHome = true;
-    ProtectKernelModules = true;
-    ProtectSystem = "strict";
+    PrivateDevices = true; # opensuse
+    PrivateTmp = true; # fedora
+    ProtectClock = true; # opensuse
+    ProtectControlGroups = true; # opensuse
+    ProtectHome = true; # opensuse
+    ProtectHostname = true; # opensuse
+    ProtectKernelLogs = true; # opensuse
+    ProtectKernelModules = true; # opensuse
+    ProtectKernelTunables = true; # opensuse
+    ProtectSystem = "full"; # opensuse (strict?)
     RestrictNamespaces = true;
     SystemCallArchitectures = "native";
   };
@@ -50,7 +56,7 @@
   systemd.services.NetworkManager.serviceConfig = {
     # Hardening
     ProtectKernelLogs = true;
-    ProtectKernelTunables = true;
+    #ProtectKernelTunables = true;  breaks ipv4/ip_forward
     ProtectKernelModules = true;
     RestrictNamespaces = true;
     SystemCallArchitectures = "native";
@@ -58,15 +64,29 @@
 
   systemd.services.bluetooth.serviceConfig = {
     # Hardening
-    NoNewPrivileges = true;
-    PrivateTmp = true;
+    MemoryDenyWriteExecute = true; # fedora
+    NoNewPrivileges = true; # fedora
+    PrivateTmp = true; # fedora
     ProtectClock = true;
-    ProtectControlGroups = true;
+    ProtectControlGroups = true; # fedora
     ProtectKernelLogs = true;
-    ProtectKernelTunables = true;
+    ProtectKernelTunables = true; # fedora
     ProtectKernelModules = true;
+    ProtectSystem = "full"; # arch, deb, fedora, opensuse
     RestrictAddressFamilies = [ "AF_UNIX" "AF_BLUETOOTH" ];
     RestrictNamespaces = true;
+    RestrictRealtime = true; # fedora
     SystemCallArchitectures = "native";
+  };
+
+  systemd.services.wpa_supplicant.serviceConfig = {
+    ProtectControlGroups = true; # OpenSUSE
+    ProtectHome = "read-only"; # OpenSUSE
+    ProtectHostname = true; # OpenSUSE
+    ProtectKernelLogs = true; # OpenSUSE
+    ProtectKernelModules = true; # OpenSUSE
+    ProtectKernelTunables = true; # OpenSUSE
+    ProtectSystem = "full"; # OpenSUSE
+    RestrictRealtime = true; # OpenSUSE
   };
 }
