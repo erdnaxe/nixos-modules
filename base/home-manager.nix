@@ -36,8 +36,16 @@
         set nostartofline
         set mouse=a
         set number
+        set cc=80
+        set clipboard=unnamedplus
+        set ttyfast
+        colorscheme codedark
       '';
-      plugins = with pkgs.vimPlugins; [ vim-lastplace vim-nix ];
+      plugins = with pkgs.vimPlugins; [
+        vim-lastplace
+        vim-nix
+        vim-code-dark
+      ];
     };
   };
 }
