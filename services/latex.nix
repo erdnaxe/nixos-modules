@@ -10,6 +10,7 @@
           # beamerposter
           beamerposter type1cm tcolorbox environ csquotes biber
 
+          animate zref media9 ocgx2
           titlepic moderncv fontawesome biblatex multirow arydshln;
       })
     ];
