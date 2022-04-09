@@ -80,7 +80,6 @@
             { block = "cpu"; format = "{barchart} {frequency}"; }
             { block = "music"; buttons = [ "play" "next" ]; }
             { block = "sound"; }
-            { block = "backlight"; }
             { block = "battery"; format = "{percentage} {time}"; driver = "upower"; device = "DisplayDevice"; }
             { block = "time"; format = "%Y/%m/%d %R"; interval = 20; }
           ];
