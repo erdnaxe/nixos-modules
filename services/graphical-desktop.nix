@@ -1,35 +1,89 @@
 { pkgs, ... }:
 
+let
+  unstable = import <nixos-unstable> { };
+in
 {
-  # XFCE + i3 desktop
-  services.xserver = {
-    enable = true;
-    displayManager.lightdm.enable = true;
-    desktopManager.xfce = {
-      enable = true;
-      noDesktop = true;
-      enableXfwm = false;
-    };
-    windowManager.i3.enable = true;
+  # Hardware acceleration
+  hardware.opengl = {
+    driSupport = true;
+    driSupport32Bit = true; # wine
+    extraPackages = [ pkgs.intel-compute-runtime ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   };
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
+      };
+    };
+  };
+  programs.sway.enable = true;
+
+  # Enable helpful DBus services.
+  services.udisks2.enable = true;
+  security.polkit.enable = true;
+  services.accounts-daemon.enable = true;
+  services.upower.enable = true;
+  #services.gnome.glib-networking.enable = true;
+  services.gvfs.enable = true;
+  #services.tumbler.enable = true;
 
   # Graphical apps
   environment.systemPackages = with pkgs; [
-    firefox
+    gnome.gnome-themes-extra
+    gnome.adwaita-icon-theme
+
+    desktop-file-utils
+    shared-mime-info # for update-mime-database
+
+    xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
+    networkmanagerapplet
+
+    firefox-wayland
     xournalpp
     mpv
     evince
     pavucontrol
-    arandr
+    wdisplays
+    dmenu-wayland
+    xfce.thunar
+
+    # Theme
+    gtk-engine-murrine
+    gtk_engines
+    gsettings-desktop-schemas
   ];
 
-  # Fonts
   fonts.fonts = with pkgs; [
     dejavu_fonts
     powerline-fonts
     font-awesome
     gyre-fonts
   ];
+
+  xdg.portal = {
+    enable = true;
+    wlr = {
+      enable = true;
+      settings = { }; # TODO
+    };
+    # Required for file chooser
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    gtkUsePortal = true;
+  };
+
+  environment.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = "1";
+    XDG_CURRENT_DESKTOP = "sway";
+    # SDL_VIDEODRIVER=wayland
+    # ECORE_EVAS_ENGINE=wayland_egl
+    # QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+    # QT_WAYLAND_FORCE_DPI=physical
+    # QT_QPA_PLATFORM=wayland
+  };
 
   # Sound with Pipewire
   sound.enable = true;
@@ -61,7 +115,6 @@
       package = pkgs.rofi.override { plugins = [ pkgs.rofi-emoji ]; };
       theme = "solarized_alternate";
       terminal = "${pkgs.alacritty}/bin/alacritty";
-      # See rofi -dump-xresources
       extraConfig = {
         modi = "window,run,drun,emoji,combi";
         combi-modi = "window,drun,emoji";
@@ -86,36 +139,35 @@
         };
       };
     };
-    services.picom = {
-      enable = true;
-      vSync = true; # Fix screen tearing
-    };
-    services.screen-locker = {
-      enable = true;
-      lockCmd = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
-      inactiveInterval = 60;
-    };
-    services.redshift = {
+    services.gammastep = {
       enable = true;
       latitude = 48.85;
       longitude = 2.35;
     };
-    xsession.windowManager.i3 = {
+    #services.swayidle = {
+    #  enable = true;
+    #  events = [
+    #    { event = "before-sleep"; command = "swaylock"; }
+    #  ];
+    #};
+    wayland.windowManager.sway = {
       enable = true;
+      package = unstable.sway;
+      wrapperFeatures.gtk = true;
       config = {
-        # exec --no-startup-id feh --bg-scale $HOME/.background-image
         modifier = "Mod4";
         terminal = "alacritty";
         menu = "rofi -show combi";
         window.hideEdgeBorders = "smart";
         floating.criteria = [
           { title = "Steam - Update News"; }
-          { class = "Pavucontrol"; }
+          { app_id = "pavucontrol"; }
+          { title = "Firefox — Sharing Indicator"; }
         ];
         bars = [
           {
             fonts = {
-              names = ["DejaVu Sans Mono for Powerline" "Font Awesome 5 Free"];
+              names = [ "DejaVu Sans Mono for Powerline" "Font Awesome 5 Free" ];
               size = 10.0;
             };
             position = "top";
@@ -136,7 +188,7 @@
           unfocused = { background = "#1c1b22"; border = "#1c1b22"; childBorder = "#1c1b22"; indicator = "#292d2e"; text = "#929298"; };
         };
         keybindings = pkgs.lib.mkOptionDefault {
-          "Control+Mod1+l" = "exec ${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 50 10";
+          "Mod4+l" = "exec ${pkgs.swaylock}/bin/swaylock -i ~/.bg.png";
           "Mod4+p" = "exec passmenu";
           "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pamixer}/bin/pamixer -i 5";
           "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pamixer}/bin/pamixer -d 5";
@@ -144,8 +196,45 @@
           "XF86AudioPause" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
           "XF86AudioNext" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl next";
           "XF86AudioPrev" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl previous";
+          "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+          "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
+          "Print" = "exec ${unstable.flameshot}/bin/flameshot gui";
+          "Mod4+ampersand" = "workspace 1";
+          "Mod4+eacute" = "workspace 2";
+          "Mod4+quotedbl" = "workspace 3";
+          "Mod4+apostrophe" = "workspace 4";
+          "Mod4+parenleft" = "workspace 5";
+          "Mod4+egrave" = "workspace 6";
+          "Mod4+minus" = "workspace 7";
+          "Mod4+underscore" = "workspace 8";
+          "Mod4+ccedilla" = "workspace 9";
+          "Mod4+agrave" = "workspace 10";
+          "Mod4+Shift+ampersand" = "move container to workspace 1";
+          "Mod4+Shift+eacute" = "move container to workspace 2";
+          "Mod4+Shift+quotedbl" = "move container to workspace 3";
+          "Mod4+Shift+apostrophe" = "move container to workspace 4";
+          "Mod4+Shift+parenleft" = "move container to workspace 5";
+          "Mod4+Shift+egrave" = "move container to workspace 6";
+          "Mod4+Shift+minus" = "move container to workspace 7";
+          "Mod4+Shift+underscore" = "move container to workspace 8";
+          "Mod4+Shift+ccedilla" = "move container to workspace 9";
+          "Mod4+Shift+agrave" = "move container to workspace 10";
         };
+        input = {
+          "*" = { xkb_layout = "fr"; };
+          "type:touchpad" = {
+            "tap" = "enabled";
+            "natural_scroll" = "enabled";
+          };
+        };
+        output = { "*" = { bg = "~/.bg.png fill"; }; };
       };
+      extraConfig = ''
+        exec ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
+        #exec ${pkgs.wl-clipboard}/bin/wl-paste -t text --watch ${pkgs.clipman}/bin/clipman store
+        exec ${pkgs.mako}/bin/mako
+        exec ${pkgs.swayidle}/bin/swayidle -w before-sleep '${pkgs.swaylock}/bin/swaylock -i ~/.bg.png'
+      '';
     };
   };
 }
