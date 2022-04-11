@@ -4,8 +4,8 @@ let
   bmpc = pkgs.fetchFromGitHub {
     owner = "erdnaxe";
     repo = "bmpc";
-    rev = "647cfd17fc37789c179358291f291a45a02df40c";
-    sha256 = "12i26qkpf908mszvpn1wcsbnfjfw75gaghqqf3z7fgvpdnam57da";
+    rev = "ff30d45bd5bc2b35cc307c1bbe9f7e976a92c7cc";
+    sha256 = "sha256-FiLKDb/Oel7U3h7TbMte4HjmKiArfT6qAw0CArT+fwU=";
   };
 in
 {
