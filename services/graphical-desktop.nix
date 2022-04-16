@@ -134,6 +134,7 @@ in
             { block = "music"; buttons = [ "play" "next" ]; }
             { block = "sound"; }
             { block = "battery"; format = "{percentage} {time}"; driver = "upower"; device = "DisplayDevice"; }
+            { block = "networkmanager"; }
             { block = "time"; format = "%Y/%m/%d %R"; interval = 20; }
           ];
         };
@@ -152,7 +153,6 @@ in
     #};
     wayland.windowManager.sway = {
       enable = true;
-      package = unstable.sway;
       wrapperFeatures.gtk = true;
       config = {
         modifier = "Mod4";

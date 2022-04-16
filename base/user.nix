@@ -9,7 +9,6 @@
       passwordFile = "/etc/nixos/erdnaxe_password.secret";
       isNormalUser = true;
       home = "/home/erdnaxe";
-      description = "Alexandre";
       shell = pkgs.zsh;
       extraGroups = [ "wheel" "dialout" ];
     };
