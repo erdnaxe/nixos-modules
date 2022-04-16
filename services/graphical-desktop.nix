@@ -1,8 +1,5 @@
 { pkgs, ... }:
 
-let
-  unstable = import <nixos-unstable> { };
-in
 {
   # Hardware acceleration
   hardware.opengl = {
@@ -198,7 +195,7 @@ in
           "XF86AudioPrev" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl previous";
           "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
           "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
-          "Print" = "exec ${unstable.flameshot}/bin/flameshot gui";
+          "Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
           "Mod4+ampersand" = "workspace 1";
           "Mod4+eacute" = "workspace 2";
           "Mod4+quotedbl" = "workspace 3";
@@ -232,7 +229,7 @@ in
       extraConfig = ''
         exec ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
         #exec ${pkgs.wl-clipboard}/bin/wl-paste -t text --watch ${pkgs.clipman}/bin/clipman store
-        exec ${pkgs.mako}/bin/mako
+        exec ${pkgs.mako}/bin/mako --default-timeout 10
         exec ${pkgs.swayidle}/bin/swayidle -w before-sleep '${pkgs.swaylock}/bin/swaylock -i ~/.bg.png'
       '';
     };
