@@ -54,11 +54,53 @@ in
         set termguicolors
         colorscheme codedark
 
-        lua require'lspconfig'.ccls.setup{}
-        lua require'lspconfig'.cmake.setup{}
-        lua require'lspconfig'.rust_analyzer.setup{}
-        lua require'lspconfig'.pyright.setup{}
-        lua require'lspconfig'.tsserver.setup{}
+        lua << EOF
+        -- Configure LSP
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
+        local lspconfig = require'lspconfig'
+        lspconfig.ccls.setup{capabilities=capabilities}
+        lspconfig.cmake.setup{capabilities=capabilities}
+        lspconfig.rust_analyzer.setup{capabilities=capabilities}
+        lspconfig.pyright.setup{capabilities=capabilities}
+        lspconfig.tsserver.setup{capabilities=capabilities}
+
+        -- Configure autocompletion
+        local luasnip = require'luasnip'
+        local cmp = require'cmp'
+        cmp.setup {
+          snippet = {
+            expand = function(args)
+              luasnip.lsp_expand(args.body)
+            end,
+          },
+          mapping = {
+            ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+            ['<Tab>'] = cmp.mapping(function(fallback)
+              if cmp.visible() then
+                cmp.select_next_item()
+              elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+              else
+                fallback()
+              end
+            end, { 'i', 's' }),
+            ['<S-Tab>'] = cmp.mapping(function(fallback)
+              if cmp.visible() then
+                cmp.select_prev_item()
+              elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+              else
+                fallback()
+              end
+            end, { 'i', 's' }),
+          },
+          sources = {{ name = 'nvim_lsp' }, { name = 'luasnip' }},
+        }
+        EOF
       '';
       plugins = with unstable.vimPlugins; [
         vim-better-whitespace
@@ -66,6 +108,10 @@ in
         vim-nix
         vim-code-dark
         nvim-lspconfig
+        nvim-cmp
+        cmp-nvim-lsp
+        cmp_luasnip
+        luasnip
       ];
     };
   };
