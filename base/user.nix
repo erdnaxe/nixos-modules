@@ -8,7 +8,6 @@
       uid = 1000;
       passwordFile = "/etc/nixos/erdnaxe_password.secret";
       isNormalUser = true;
-      home = "/home/erdnaxe";
       shell = pkgs.zsh;
       extraGroups = [ "wheel" "dialout" ];
     };
