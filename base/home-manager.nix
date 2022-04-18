@@ -1,8 +1,19 @@
 { pkgs, ... }:
 
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   imports = [ <home-manager/nixos> ];
   home-manager.users.erdnaxe = {
+    home.packages = with pkgs; [
+      # Language servers for NeoVim and VSCode
+      ccls
+      cmake-language-server
+      rust-analyzer
+      nodePackages.pyright
+      nodePackages.typescript-language-server
+    ];
     programs.git = {
       enable = true;
       userName = "Alexandre Iooss";
@@ -20,6 +31,7 @@
     };
     programs.neovim = {
       enable = true;
+      package = unstable.neovim-unwrapped;
       viAlias = true;
       vimAlias = true;
       extraConfig = ''
@@ -39,12 +51,21 @@
         set cc=80
         set clipboard=unnamedplus
         set ttyfast
+        set termguicolors
         colorscheme codedark
+
+        lua require'lspconfig'.ccls.setup{}
+        lua require'lspconfig'.cmake.setup{}
+        lua require'lspconfig'.rust_analyzer.setup{}
+        lua require'lspconfig'.pyright.setup{}
+        lua require'lspconfig'.tsserver.setup{}
       '';
-      plugins = with pkgs.vimPlugins; [
+      plugins = with unstable.vimPlugins; [
+        vim-better-whitespace
         vim-lastplace
         vim-nix
         vim-code-dark
+        nvim-lspconfig
       ];
     };
   };
