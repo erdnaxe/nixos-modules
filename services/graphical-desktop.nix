@@ -13,7 +13,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway --my-next-gpu-wont-be-nvidia";
       };
     };
   };
@@ -32,14 +32,16 @@
   environment.systemPackages = with pkgs; [
     gnome.gnome-themes-extra
     gnome.adwaita-icon-theme
+    wl-clipboard
 
     desktop-file-utils
     shared-mime-info # for update-mime-database
 
-    xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
+    xdg-user-dirs
     networkmanagerapplet
 
     firefox-wayland
+    thunderbird-wayland
     xournalpp
     mpv
     evince
@@ -47,11 +49,21 @@
     wdisplays
     dmenu-wayland
     xfce.thunar
+    pass-wayland
+    remmina
+    gnome3.eog
+    gnome3.gnome-disk-utility
 
     # Theme
     gtk-engine-murrine
     gtk_engines
     gsettings-desktop-schemas
+
+    # Dicts
+    aspellDicts.en
+    aspellDicts.en-computers
+    aspellDicts.en-science
+    aspellDicts.fr
   ];
 
   fonts.fonts = with pkgs; [
@@ -65,7 +77,7 @@
     enable = true;
     wlr = {
       enable = true;
-      settings = { }; # TODO
+      settings = { }; # TODO, see xdg-desktop-portal-wlr(5)
     };
     # Required for file chooser
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -73,13 +85,12 @@
   };
 
   environment.sessionVariables = {
+    # Firefox screensharing
     MOZ_ENABLE_WAYLAND = "1";
     XDG_CURRENT_DESKTOP = "sway";
-    # SDL_VIDEODRIVER=wayland
-    # ECORE_EVAS_ENGINE=wayland_egl
-    # QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-    # QT_WAYLAND_FORCE_DPI=physical
-    # QT_QPA_PLATFORM=wayland
+
+    # Fix blank Java applications
+    _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 
   # Sound with Pipewire
@@ -92,6 +103,13 @@
     jack.enable = true;
   };
   security.rtkit.enable = true;
+
+  # OpenPGP and SSH agent
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "qt";
+    enableSSHSupport = true;
+  };
 
   # More graphical tools in home-manager
   home-manager.users.erdnaxe = {

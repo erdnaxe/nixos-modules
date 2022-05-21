@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   imports = [
     <nixpkgs/nixos/modules/profiles/base.nix>
@@ -7,6 +7,11 @@
 
   # Remove ZFS, CIFS, XFS, REISERFS, BTRFS from supported filesystems
   boot.supportedFilesystems = lib.mkForce [ "vfat" "f2fs" "ntfs" ];
+
+  environment.systemPackages = with pkgs; [
+    wget utillinux file dmidecode inetutils jq
+    tmux tree nettools ripgrep
+  ];
 
   # Coming in D-Bus 0.14
   # https://gitlab.freedesktop.org/dbus/dbus/-/merge_requests/107
