@@ -233,5 +233,9 @@
         exec ${pkgs.swayidle}/bin/swayidle -w before-sleep '${pkgs.swaylock}/bin/swaylock -i ~/.bg.png'
       '';
     };
+    programs.chromium = {
+      enable = true;
+      package = pkgs.ungoogled-chromium;
+    };
   };
 }
