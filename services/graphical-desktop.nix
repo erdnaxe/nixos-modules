@@ -128,7 +128,7 @@
             { block = "disk_space"; }
             { block = "memory"; format_mem = "{mem_used_percents}"; format_swap = "{swap_used_percents}"; }
             { block = "cpu"; format = "{barchart} {frequency}"; }
-            { block = "music"; buttons = [ "play" "next" ]; }
+            { block = "music"; buttons = [ "play" "next" ]; max_width = 0; format = " "; }
             { block = "sound"; }
             { block = "battery"; format = "{percentage} {time}"; driver = "upower"; device = "DisplayDevice"; }
             { block = "networkmanager"; }
