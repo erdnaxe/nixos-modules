@@ -1,8 +1,3 @@
-#{ lib
-#, stdenv
-#, buildGoPackage
-#, fetchFromGitHub
-#}:
 with import <nixpkgs> { };
 
 buildGoModule rec {
