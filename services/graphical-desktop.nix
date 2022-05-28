@@ -253,7 +253,9 @@
     };
     programs.chromium = {
       enable = true;
-      package = pkgs.ungoogled-chromium;
+      package = pkgs.ungoogled-chromium.override {
+        commandLineArgs = "--ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --disable-features=UserAgentClientHint -incognito";
+      };
     };
   };
 }
