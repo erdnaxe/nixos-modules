@@ -84,17 +84,6 @@
     SystemCallArchitectures = "native";
   };
 
-  systemd.services.wpa_supplicant.serviceConfig = {
-    ProtectControlGroups = true; # OpenSUSE
-    ProtectHome = "read-only"; # OpenSUSE
-    ProtectHostname = true; # OpenSUSE
-    ProtectKernelLogs = true; # OpenSUSE
-    ProtectKernelModules = true; # OpenSUSE
-    ProtectKernelTunables = true; # OpenSUSE
-    ProtectSystem = "full"; # OpenSUSE
-    RestrictRealtime = true; # OpenSUSE
-  };
-
   systemd.services.postgresql.serviceConfig = {
     NoNewPrivileges = true; # arch
     PrivateDevices = true; # arch

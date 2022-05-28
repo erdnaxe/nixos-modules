@@ -160,12 +160,6 @@
       latitude = 48.85;
       longitude = 2.35;
     };
-    #services.swayidle = {
-    #  enable = true;
-    #  events = [
-    #    { event = "before-sleep"; command = "swaylock"; }
-    #  ];
-    #};
     wayland.windowManager.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
