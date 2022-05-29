@@ -15,6 +15,9 @@
       proxyVideos = false;
       replaceTwitter = "nitter.nanax.fr";
     };
+    cache = {
+      rssMinutes = 120;
+    };
   };
 
   services.nginx = {
@@ -23,6 +26,12 @@
       enableACME = true;
       forceSSL = true;
       locations."/" = { proxyPass = "http://127.0.0.1:3005"; };
+      extraConfig = ''
+        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" always;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-Frame-Options deny;
+        add_header X-XSS-Protection "1; mode=block";
+      '';
     };
   };
 }
