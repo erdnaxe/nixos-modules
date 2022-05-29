@@ -22,6 +22,9 @@
       enableACME = true;
       forceSSL = true;
       locations."/" = { proxyPass = "http://127.0.0.1:3001"; };
+      extraConfig = ''
+        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" always;
+      '';
     };
   };
 }

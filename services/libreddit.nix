@@ -43,6 +43,9 @@
         proxyPass = "http://127.0.0.1:3003";
         proxyWebsockets = true;
       };
+      extraConfig = ''
+        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" always;
+      '';
     };
   };
 }

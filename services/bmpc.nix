@@ -17,6 +17,12 @@ in
       enableACME = true;
       forceSSL = true;
       root = "${bmpc}/static";
+      extraConfig = ''
+        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" always;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-Frame-Options deny;
+        add_header X-XSS-Protection "1; mode=block";
+      '';
     };
   };
 }
