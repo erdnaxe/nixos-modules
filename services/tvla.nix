@@ -11,8 +11,8 @@
       root = pkgs.fetchFromGitHub {
         owner = "erdnaxe";
         repo = "tvla";
-        rev = "d06c54a164e9b14f5dcf7b0d58de89b70379c071";
-        sha256 = "0gmm49bqrqqn0j8n3icl4jwax893p3d7zsn25azijp8q2p07z5nv";
+        rev = "cfa18c1e0abe6d2127d1d9b54f4eaf0dd795d72e";
+        sha256 = "sha256-L+0MtPQMdI7jm43jnXeJKGcW8PyDvJmi4NHgcRRB+mg=";
       };
       extraConfig = ''
         add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" always;
