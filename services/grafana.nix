@@ -13,6 +13,11 @@
       ANALYTICS_REPORTING_ENABLED = "false";
       SNAPSHOTS_ENABLED = "false";
       PANELS_DISABLE_SANITIZE_HTML = "true";
+      SECURITY_STRICT_TRANSPORT_SECURITY = "true";
+      SECURITY_STRICT_TRANSPORT_SECURITY_MAX_AGE_SECONDS = "31536000";
+      SECURITY_STRICT_TRANSPORT_SECURITY_PRELOAD = "true";
+      SECURITY_STRICT_TRANSPORT_SECURITY_SUBDOMAINS = "true";
+      SECURITY_CONTENT_SECURITY_POLICY = "true";
     };
   };
 
@@ -22,9 +27,6 @@
       enableACME = true;
       forceSSL = true;
       locations."/" = { proxyPass = "http://127.0.0.1:3001"; };
-      extraConfig = ''
-        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" always;
-      '';
     };
   };
 }
