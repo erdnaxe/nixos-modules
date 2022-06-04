@@ -7,8 +7,8 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "erdnaxe";
     repo = "bmpc";
-    rev = "7ba9f2ada796145a01f2af82fcd17d811004e891";
-    sha256 = "sha256-s0mxd9pVIprOZYUPak5d1yKFVpYXR0+pnZNcmzawpac=";
+    rev = "128b6a082b64ca6d56cbe4ecde88d5bbce5205a5";
+    sha256 = "sha256-xMWYYIcBddIcmSPMjeoC4S0FJ4tkoNE3yoGYFEtCi1o=";
   };
 
   vendorSha256 = "sha256-cRv++pKboUblZlWrIMOtb8OZFRfrrBqRyPqDa89/REA=";
