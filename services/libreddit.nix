@@ -7,7 +7,7 @@
     address = "127.0.0.1";
   };
 
-  # https://github.com/NixOS/nixpkgs/pull/133771
+  # https://github.com/NixOS/nixpkgs/pull/133771, merged in NixOS 22.11
   systemd.services.libreddit.serviceConfig = {
     # Hardening
     CapabilityBoundingSet = [ "" ];
