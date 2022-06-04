@@ -1,8 +1,5 @@
 { pkgs, ... }:
 
-let
-  unstable = import <nixos-unstable> {};
-in
 {
   imports = [ <home-manager/nixos> ];
   home-manager.users.erdnaxe = {
@@ -31,7 +28,6 @@ in
     };
     programs.neovim = {
       enable = true;
-      package = unstable.neovim-unwrapped;
       viAlias = true;
       vimAlias = true;
       extraConfig = ''
@@ -102,7 +98,7 @@ in
         }
         EOF
       '';
-      plugins = with unstable.vimPlugins; [
+      plugins = with pkgs.vimPlugins; [
         vim-better-whitespace
         vim-lastplace
         vim-nix
