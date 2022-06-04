@@ -13,7 +13,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway --my-next-gpu-wont-be-nvidia";
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd \"sway --unsupported-gpu\"";
       };
     };
   };
