@@ -60,6 +60,10 @@
     SystemCallArchitectures = "native";
     SystemCallFilter = [ "@system-service" "~@privileged" "~@resources" ];
     UMask = "0077";
+
+    # Allow only localhost network access
+    IPAddressAllow = "localhost";
+    IPAddressDeny = "any";
   };
 
   services.nginx = {
