@@ -14,7 +14,7 @@
         purge-after = "30d";
       };
       smtp = {
-        host = "smtp.crans.org";
+        host = "localhost";
         port = 25;
         to = "erdnaxe@crans.org";
         from = "Isso <root@nanax.fr>";
