@@ -21,12 +21,6 @@
     };
   };
 
-  # Allow only localhost network access
-  systemd.services.grafana.serviceConfig = {
-    IPAddressAllow = "localhost";
-    IPAddressDeny = "any";
-  };
-
   services.nginx = {
     enable = true;
     virtualHosts."grafana.nanax.fr" = {

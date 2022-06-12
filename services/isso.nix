@@ -14,7 +14,7 @@
         purge-after = "30d";
       };
       smtp = {
-        host = "localhost";
+        host = "smtp.crans.org";
         port = 25;
         to = "erdnaxe@crans.org";
         from = "Isso <root@nanax.fr>";
@@ -60,10 +60,6 @@
     SystemCallArchitectures = "native";
     SystemCallFilter = [ "@system-service" "~@privileged" "~@resources" ];
     UMask = "0077";
-
-    # Allow only localhost network access
-    IPAddressAllow = "localhost";
-    IPAddressDeny = "any";
   };
 
   services.nginx = {
