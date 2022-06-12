@@ -69,18 +69,11 @@
 
   systemd.services.bluetooth.serviceConfig = {
     # Hardening
-    MemoryDenyWriteExecute = true; # fedora
-    NoNewPrivileges = true; # fedora
-    PrivateTmp = true; # fedora
+    # RestrictAddressFamilies = [ "AF_UNIX" "AF_BLUETOOTH" "AF_NETLINK" ]; breaks rfkill
     ProtectClock = true;
-    ProtectControlGroups = true; # fedora
     ProtectKernelLogs = true;
-    ProtectKernelTunables = true; # fedora
     ProtectKernelModules = true;
-    ProtectSystem = "full"; # arch, deb, fedora, opensuse
-    RestrictAddressFamilies = [ "AF_UNIX" "AF_BLUETOOTH" ];
     RestrictNamespaces = true;
-    RestrictRealtime = true; # fedora
     SystemCallArchitectures = "native";
   };
 
