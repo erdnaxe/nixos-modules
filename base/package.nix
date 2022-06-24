@@ -89,4 +89,24 @@
     RestrictNamespaces = true; # arch
     RestrictRealtime = true; # arch
   };
+
+  systemd.services.logrotate.serviceConfig = {
+    # https://github.com/logrotate/logrotate/blob/master/examples/logrotate.service
+    Nice = 19;
+    IOSchedulingClass = "best-effort";
+    IOSchedulingPriority = 7;
+    LockPersonality = true;
+    MemoryDenyWriteExecute = true;
+    PrivateDevices = true;
+    PrivateTmp = true;
+    ProtectClock = true;
+    ProtectControlGroups = true;
+    ProtectHostname = true;
+    ProtectKernelLogs = true;
+    ProtectKernelModules = true;
+    ProtectKernelTunables = true;
+    ProtectSystem = "full";
+    RestrictNamespaces = true;
+    RestrictRealtime = true;
+  };
 }
