@@ -3,7 +3,7 @@
 
   services.nginx = {
     enable = true;
-    virtualHosts."grimorio.org" = {
+    virtualHosts."sandboxdb.org" = {
       enableACME = true;
       forceSSL = true;
       root = "/var/www/grimorio/";

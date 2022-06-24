@@ -12,5 +12,10 @@
       forceSSL = true;
       locations."/".return = "302 https://rss.nanax.fr$request_uri";
     };
+    "grimorio.org" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".return = "301 https://sandboxdb.org$request_uri";
+    };
   };
 }
