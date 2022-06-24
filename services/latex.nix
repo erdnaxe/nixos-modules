@@ -11,7 +11,7 @@
           beamerposter type1cm tcolorbox environ csquotes biber
 
           animate zref media9 ocgx2
-          titlepic moderncv fontawesome biblatex multirow arydshln
+          titlepic moderncv fontawesome fontawesome5 biblatex multirow arydshln
 
           pgfplots wrapfig;
       })
