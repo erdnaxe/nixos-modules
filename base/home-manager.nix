@@ -17,13 +17,12 @@
       userEmail = "erdnaxe@crans.org";
       signing.key = "6C79278F3FCDCC02";
     };
-    programs.htop = {
+    programs.bottom = {
       enable = true;
-      settings = {
-        hide_threads = true;
-        hide_userland_threads = true;
-        show_program_path = false;
-        tree_view = true;
+      settings.flags = {
+        basic = true;
+        hide_avg_cpu = true;
+        tree = true;
       };
     };
     programs.neovim = {
