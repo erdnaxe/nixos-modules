@@ -6,8 +6,6 @@
       "-w /etc/ -p wa -k audit_conf"
       # watch mounts
       "-a exit,always -S mount -S umount2 -k audit_mount"
-      # strange x86 syscalls
-      "-a exit,always -S ioperm -S modify_ldt -k audit_syscall"
     ];
   };
 
