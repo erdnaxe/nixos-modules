@@ -3,14 +3,6 @@
 {
   imports = [ <home-manager/nixos> ];
   home-manager.users.erdnaxe = {
-    home.packages = with pkgs; [
-      # Language servers for NeoVim and VSCode
-      ccls
-      cmake-language-server
-      rust-analyzer
-      nodePackages.pyright
-      nodePackages.typescript-language-server
-    ];
     programs.git = {
       enable = true;
       userName = "Alexandre Iooss";

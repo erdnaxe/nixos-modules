@@ -64,6 +64,13 @@
     aspellDicts.en-computers
     aspellDicts.en-science
     aspellDicts.fr
+
+    # Language servers for NeoVim and VSCodium
+    ccls
+    cmake-language-server
+    rust-analyzer
+    nodePackages.pyright
+    nodePackages.typescript-language-server
   ];
 
   fonts.fonts = with pkgs; [
