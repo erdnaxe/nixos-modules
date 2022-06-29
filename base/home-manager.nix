@@ -5,6 +5,7 @@
   home-manager.users.erdnaxe = {
     programs.git = {
       enable = true;
+      package = pkgs.gitMinimal;
       userName = "Alexandre Iooss";
       userEmail = "erdnaxe@crans.org";
       signing.key = "6C79278F3FCDCC02";
