@@ -71,6 +71,45 @@
     rust-analyzer
     nodePackages.pyright
     nodePackages.typescript-language-server
+
+    # System repair
+    pkgs.testdisk
+    pkgs.ms-sys
+    pkgs.efibootmgr
+    pkgs.efivar
+    pkgs.parted
+    pkgs.gptfdisk
+    pkgs.ddrescue
+    pkgs.ccrypt
+    pkgs.cryptsetup
+    pkgs.mkpasswd
+
+    # Some networking tools.
+    pkgs.fuse
+    pkgs.fuse3
+    pkgs.sshfs-fuse
+    pkgs.rsync
+    pkgs.socat
+    pkgs.screen
+
+    # Hardware-related tools.
+    pkgs.sdparm
+    pkgs.hdparm
+    pkgs.smartmontools # for diagnosing hard disks
+    pkgs.pciutils
+    pkgs.usbutils
+
+    # Tools to create / manipulate filesystems.
+    pkgs.ntfsprogs # for resizing NTFS partitions
+    pkgs.dosfstools
+    pkgs.mtools
+    pkgs.xfsprogs.bin
+    pkgs.jfsutils
+    pkgs.f2fs-tools
+
+    # Some compression/archiver tools.
+    pkgs.unzip
+    pkgs.zip
   ];
 
   fonts.fonts = with pkgs; [

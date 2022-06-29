@@ -1,12 +1,9 @@
 { lib, pkgs, ... }:
 {
-  imports = [
-    <nixpkgs/nixos/modules/profiles/base.nix>
-  ];
   environment.variables = { EDITOR = "vim"; };
 
   # Remove ZFS, CIFS, XFS, REISERFS, BTRFS from supported filesystems
-  boot.supportedFilesystems = lib.mkForce [ "vfat" "f2fs" "ntfs" ];
+  boot.supportedFilesystems = [ "vfat" "f2fs" "ntfs" ];
 
   environment.systemPackages = with pkgs; [
     wget utillinux file dmidecode inetutils jq
