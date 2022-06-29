@@ -3,11 +3,11 @@
 {
   imports = [
     ./home-manager.nix
-    ./kernel.nix
     ./letsencrypt.nix
     ./locale.nix
     ./nix.nix
     ./package.nix
+    ./security.nix
     ./user.nix
     ./zsh.nix
   ];
